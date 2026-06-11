@@ -8,9 +8,9 @@
 window.FLEX_DATA = (function () {
   // Distributors / sellers ------------------------------------------------
   const DISTRIBUTORS = [
-    { code: 'DA', name: 'Distributor Alpha' },
-    { code: 'DB', name: 'Distributor Beta' },
-    { code: 'DG', name: 'Distributor Gamma' },
+    { code: 'DA', name: 'Distribuidor Alpha' },
+    { code: 'DB', name: 'Distribuidor Beta' },
+    { code: 'DG', name: 'Distribuidor Gamma' },
   ];
 
   // Generic CNPJ pattern: 00.000.000/0001-XX
@@ -18,11 +18,11 @@ window.FLEX_DATA = (function () {
 
   // Chains used on the drafts list ---------------------------------------
   const CHAINS = [
-    { name: 'Chain Alpha',  cnpj: cnpj(11) },
-    { name: 'Chain Beta',   cnpj: cnpj(12) },
-    { name: 'Chain Gamma',  cnpj: cnpj(13) },
-    { name: 'Chain Delta',  cnpj: cnpj(14) },
-    { name: 'Chain Epsilon',cnpj: cnpj(15) },
+    { name: 'Rede Alpha',  cnpj: cnpj(11) },
+    { name: 'Rede Beta',   cnpj: cnpj(12) },
+    { name: 'Rede Gamma',  cnpj: cnpj(13) },
+    { name: 'Rede Delta',  cnpj: cnpj(14) },
+    { name: 'Rede Epsilon',cnpj: cnpj(15) },
   ];
 
   // ----------------------------------------------------------------------
@@ -33,62 +33,62 @@ window.FLEX_DATA = (function () {
 
   const CART = {
     expandedSeller: {
-      name: 'Distributor Alpha',
+      name: 'Distribuidor Alpha',
       cnpj: cnpj(11),
-      storeName: 'Chain Alpha — Mini Market 02',
+      storeName: 'Rede Alpha — Mini Mercado 02',
       products: [
         {
           id: 'p-001',
-          name: 'Lager 6-pack Bottles',
-          uom: '6 × 355ml Bottle',
+          name: 'Esmalte Vermelho Clássico — 12 un.',
+          uom: '12 × 8 ml',
           qty: 100,
           unitPrice: 15.00,
           listPrice: 20.00,
           flexDiscount: true,
-          discountApplied: 'Discount applied',
+          discountApplied: 'Desconto aplicado',
           lineTotal: 1500.00,
           negotiatedTotal: 150.00,
-          img: cartImg('LB', 'amber'),
+          img: cartImg('EV', 'amber'),
         },
         {
           id: 'p-002',
-          name: 'Premium Lager Long-neck',
-          uom: '4 × 355ml Bottle',
+          name: 'Shampoo Hidratante — 6 un.',
+          uom: '6 × 400 ml',
           qty: 100,
           unitPrice: 15.00,
           listPrice: 20.00,
           flexDiscount: true,
-          discountApplied: 'Discount applied',
+          discountApplied: 'Desconto aplicado',
           lineTotal: 1500.00,
           negotiatedTotal: 150.00,
-          img: cartImg('PL', 'amber'),
+          img: cartImg('SH', 'amber'),
         },
         {
           id: 'p-003',
-          name: 'Pale Ale 12-pack Cans',
-          uom: '12 × 330ml Can',
+          name: 'Máscara Capilar Nutritiva — 4 un.',
+          uom: '4 × 300 g',
           qty: 40,
           unitPrice: 22.50,
           listPrice: 25.00,
           flexDiscount: false,
           lineTotal: 900.00,
-          img: cartImg('PA', 'red'),
+          img: cartImg('MC', 'red'),
         },
         {
           id: 'p-004',
-          name: 'Sparkling Water 24-pack',
-          uom: '24 × 500ml Bottle',
+          name: 'Loção Corporal — 12 un.',
+          uom: '12 × 200 ml',
           qty: 30,
           unitPrice: 9.80,
           listPrice: 10.50,
           flexDiscount: false,
           lineTotal: 294.00,
-          img: cartImg('SW', 'info'),
+          img: cartImg('LC', 'info'),
         },
       ],
       summary: {
         products: 4,
-        pallets: '1.2 pallets',
+        pallets: '1,2 paletes',
         storeTotal: 37371.80,
         negotiatedTotal: 150.00,
         flexAppliedTotal: 150.00,
@@ -97,50 +97,50 @@ window.FLEX_DATA = (function () {
     collapsedStores: [
       {
         id: 'c-101',
-        storeName: 'Chain Alpha — Headquarters',
+        storeName: 'Rede Alpha — Matriz',
         cnpj: cnpj(7),
-        chip: { type: 'error', label: 'Unable to place order' },
+        chip: { type: 'error', label: 'Não foi possível fazer o pedido' },
         storeTotal: 37371.80,
       },
       {
         id: 'c-102',
-        storeName: 'Chain Alpha — Sumare',
+        storeName: 'Rede Alpha — Sumaré',
         cnpj: cnpj(8),
         productsCount: 5,
-        pallets: '1.2 pallets',
+        pallets: '1,2 paletes',
         storeTotal: 37371.80,
       },
       {
         id: 'c-103',
-        storeName: 'Chain Alpha — Megastore',
+        storeName: 'Rede Alpha — Megastore',
         cnpj: cnpj(9),
         productsCount: 7,
-        pallets: '1.0 pallets',
+        pallets: '1,0 paletes',
         storeTotal: 37371.80,
         minimumNotice: { amount: 250.00, progress: 38 },
       },
       {
         id: 'c-104',
-        storeName: 'Chain Alpha — Superstore',
+        storeName: 'Rede Alpha — Superstore',
         cnpj: cnpj(10),
         productsCount: 9,
-        pallets: '4.1 pallets',
+        pallets: '4,1 paletes',
         storeTotal: 37371.80,
       },
       {
         id: 'c-105',
-        storeName: 'Chain Alpha — Neighborhood Outlet',
+        storeName: 'Rede Alpha — Loja de Bairro',
         cnpj: cnpj(11),
         productsCount: 5,
-        pallets: '0.5 pallets',
+        pallets: '0,5 paletes',
         storeTotal: 37371.80,
         minimumNotice: { amount: 250.00, progress: 24 },
       },
     ],
     orderSummary: {
-      sellerLabel: 'Distributor Alpha',
-      subtotalLabel: 'Order is for 11 stores',
-      pallets: '19.94 pallets',
+      sellerLabel: 'Distribuidor Alpha',
+      subtotalLabel: 'Pedido para 11 lojas',
+      pallets: '19,94 paletes',
       subtotal: 176.00,
       fees: 5.00,
       taxes: 10.00,
@@ -153,115 +153,127 @@ window.FLEX_DATA = (function () {
 
   // ----------------------------------------------------------------------
   // SCREEN 3 / 4 — Draft order line items
-  //   28 mock products for the open chain draft, paginated to 10/page.
-  //   Two products are intentionally out-of-stock to demonstrate the
-  //   disabled row state.
+  //   10 produtos de cosméticos por loja no rascunho aberto.
+  //   Um produto fica sem estoque para demonstrar linha desabilitada.
   // ----------------------------------------------------------------------
-  const SOLD_BY_OPTIONS = ['Distributor Alpha', 'Distributor Beta', 'Distributor Gamma'];
+  const SOLD_BY_OPTIONS = ['Distribuidor Alpha', 'Distribuidor Beta', 'Distribuidor Gamma'];
 
   const productSeed = [
-    'Bottled Lager — 12pk',
-    'Premium Pilsner — 6pk',
-    'Hoppy IPA — 4pk',
-    'Belgian Wheat — 6pk',
-    'Dark Stout — 4pk',
-    'Sparkling Water 24pk',
-    'Sports Drink Citrus 12pk',
-    'Energy Drink Original 12pk',
-    'Cola Classic 24pk',
-    'Lime Soda 12pk',
-    'Pale Ale Cans — 12pk',
-    'Amber Ale Bottles — 6pk',
-    'Light Lager — 24pk',
-    'Non-alcoholic Lager — 6pk',
-    'Mineral Water Still 12pk',
-    'Mineral Water Sparkling 12pk',
-    'Iced Tea Lemon 12pk',
-    'Iced Tea Peach 12pk',
-    'Cold Brew Coffee 6pk',
-    'Bottled Lager — 24pk',
-    'Premium Pilsner — 12pk',
-    'Hoppy IPA — 6pk',
-    'Belgian Wheat — 12pk',
-    'Dark Stout — 6pk',
-    'Sparkling Water 12pk',
-    'Sports Drink Berry 12pk',
-    'Energy Drink Sugar-Free 12pk',
-    'Cola Zero 24pk',
+    'Esmalte Vermelho Clássico — 12 un.',
+    'Shampoo Hidratante — 6 un.',
+    'Condicionador Reparador — 6 un.',
+    'Máscara Capilar Nutritiva — 4 un.',
+    'Creme Hidratante Facial — 4 un.',
+    'Sabonete Líquido — 12 un.',
+    'Desodorante Roll-on — 12 un.',
+    'Loção Corporal — 12 un.',
+    'Protetor Solar FPS 50 — 6 un.',
+    'Batom Matte — 6 un.',
+    'Esmalte Nude Brilhante — 12 un.',
+    'Shampoo Anticaspa — 6 un.',
+    'Condicionador Brilho — 6 un.',
+    'Óleo Capilar — 4 un.',
+    'Sérum Facial Vitamina C — 4 un.',
+    'Sabonete Íntimo — 12 un.',
+    'Desodorante Aerosol — 12 un.',
+    'Creme para Mãos — 12 un.',
+    'Protetor Solar FPS 30 — 6 un.',
+    'Batom Hidratante — 6 un.',
+    'Base para Unhas — 12 un.',
+    'Shampoo Infantil — 6 un.',
+    'Condicionador Kids — 6 un.',
+    'Máscara de Cílios — 4 un.',
+    'Perfume Corporal — 4 un.',
+    'Shampoo Seco — 12 un.',
+    'Fixador de Cabelo — 12 un.',
+    'Gloss Labial — 6 un.',
   ];
 
-  // Map products to a representative emoji so the table can show a
-  // visual placeholder where a product photo would go in production.
   const PRODUCT_EMOJI = {
-    'Bottled Lager — 12pk': '🍺',
-    'Premium Pilsner — 6pk': '🍻',
-    'Hoppy IPA — 4pk': '🍺',
-    'Belgian Wheat — 6pk': '🍺',
-    'Dark Stout — 4pk': '🍺',
-    'Sparkling Water 24pk': '💧',
-    'Sports Drink Citrus 12pk': '🥤',
-    'Energy Drink Original 12pk': '⚡',
-    'Cola Classic 24pk': '🥤',
-    'Lime Soda 12pk': '🥤',
-    'Pale Ale Cans — 12pk': '🍺',
-    'Amber Ale Bottles — 6pk': '🍺',
-    'Light Lager — 24pk': '🍺',
-    'Non-alcoholic Lager — 6pk': '🍺',
-    'Mineral Water Still 12pk': '💧',
-    'Mineral Water Sparkling 12pk': '💧',
-    'Iced Tea Lemon 12pk': '🍋',
-    'Iced Tea Peach 12pk': '🍑',
-    'Cold Brew Coffee 6pk': '☕',
-    'Bottled Lager — 24pk': '🍺',
-    'Premium Pilsner — 12pk': '🍻',
-    'Hoppy IPA — 6pk': '🍺',
-    'Belgian Wheat — 12pk': '🍺',
-    'Dark Stout — 6pk': '🍺',
-    'Sparkling Water 12pk': '💧',
-    'Sports Drink Berry 12pk': '🥤',
-    'Energy Drink Sugar-Free 12pk': '⚡',
-    'Cola Zero 24pk': '🥤',
+    'Esmalte Vermelho Clássico — 12 un.': '💅',
+    'Shampoo Hidratante — 6 un.': '🧴',
+    'Condicionador Reparador — 6 un.': '🧴',
+    'Máscara Capilar Nutritiva — 4 un.': '✨',
+    'Creme Hidratante Facial — 4 un.': '🧴',
+    'Sabonete Líquido — 12 un.': '🧼',
+    'Desodorante Roll-on — 12 un.': '🧴',
+    'Loção Corporal — 12 un.': '🧴',
+    'Protetor Solar FPS 50 — 6 un.': '☀️',
+    'Batom Matte — 6 un.': '💄',
+    'Esmalte Nude Brilhante — 12 un.': '💅',
+    'Shampoo Anticaspa — 6 un.': '🧴',
+    'Condicionador Brilho — 6 un.': '🧴',
+    'Óleo Capilar — 4 un.': '✨',
+    'Sérum Facial Vitamina C — 4 un.': '🧴',
+    'Sabonete Íntimo — 12 un.': '🧼',
+    'Desodorante Aerosol — 12 un.': '🧴',
+    'Creme para Mãos — 12 un.': '🧴',
+    'Protetor Solar FPS 30 — 6 un.': '☀️',
+    'Batom Hidratante — 6 un.': '💄',
+    'Base para Unhas — 12 un.': '💅',
+    'Shampoo Infantil — 6 un.': '🧴',
+    'Condicionador Kids — 6 un.': '🧴',
+    'Máscara de Cílios — 4 un.': '💄',
+    'Perfume Corporal — 4 un.': '✨',
+    'Shampoo Seco — 12 un.': '🧴',
+    'Fixador de Cabelo — 12 un.': '✨',
+    'Gloss Labial — 6 un.': '💄',
   };
 
   // Pool of store names used to seed each product's per-store breakdown.
   // The 20-store chain in DRAFT_CONTEXT samples 3–5 of these per product
   // so the rep can edit each store's qty / flex / new price independently.
   const STORE_POOL = [
-    'Ultra popular - Store 01',
-    'Ultra popular - Centro',
-    'Ultra popular - Zona Sul',
-    'Ultra popular - Zona Norte',
-    'Ultra popular - Anália Franco',
-    'Ultra popular - Vila Olímpia',
+    'Rede Alpha — Mini Mercado 02',
+    'Rede Alpha — Matriz',
+    'Rede Alpha — Sumaré',
+    'Rede Alpha — Megastore',
+    'Rede Alpha — Superstore',
+    'Rede Alpha — Loja de Bairro',
   ];
 
-  const DRAFT_PRODUCTS = productSeed.map((name, i) => {
+  const MINI_MERCADO_02 = 'Rede Alpha — Mini Mercado 02';
+
+  /** Signed flex % per product × store. 0 = sem alteração (aparece no caminhão sem tag flex). */
+  function demoFlexSigned(productIdx, storeName, storeIdx) {
+    if (storeName === MINI_MERCADO_02) {
+      if (productIdx === 0) return 20;           // +20% — espelha linha no rascunho
+      if (productIdx >= 1 && productIdx <= 3) return -10;
+      if (productIdx === 4) return -12;
+      return 0;                                  // itens 6–10 sem alteração
+    }
+    if (storeIdx === 0) return productIdx === 0 ? 20 : -10;
+    if (productIdx % 3 === 2) return 0;
+    return storeIdx % 2 === 0 ? -10 : 5;
+  }
+
+  const DRAFT_PRODUCTS = productSeed.slice(0, 10).map((name, i) => {
     const ean = '7890026421' + String(34 + i).padStart(2, '0');
     const currentPrice = 20.66;
-    const baseFlexPct = 10;
     const minPct = 10;
-    const maxPct = 12;
-    const outOfStock = i === 9 || i === 17;
+    const maxPct = 20;
+    const outOfStock = i === 9;
 
-    // Generate 3–5 stores per product. First few products keep their
-    // store-level values aligned (so the parent row shows a single value);
-    // products from index 3 onwards get small variations to demonstrate
-    // the range display ("5% to 10%", "R$ 40,00 to R$ 74,40").
-    const storeCount = 3 + (i % 3);
-    const varied = i >= 3;
-    const stores = Array.from({ length: storeCount }, (_, sIdx) => {
-      const flexPct = varied
-        ? baseFlexPct + (sIdx % 3) * 2.5  // 10, 12.5, 15, 10, ...
-        : baseFlexPct;
-      const flexValue = +(currentPrice * (flexPct / 100)).toFixed(2);
-      const newPrice = +(currentPrice - flexValue).toFixed(2);
-      const qty = varied ? 3 + sIdx : 4;
+    // 10 produtos × cada loja do pool — lista menor e alinhada ao caminhão.
+    const stores = STORE_POOL.map((storeName, sIdx) => {
+      const flexSigned = demoFlexSigned(i, storeName, sIdx);
+      const magnitude = Math.abs(flexSigned);
+      const flexValue = flexSigned === 0
+        ? 0
+        : +(currentPrice * (magnitude / 100)).toFixed(2);
+      const newPrice = flexSigned === 0
+        ? currentPrice
+        : flexSigned < 0
+          ? +(currentPrice - flexValue).toFixed(2)
+          : +(currentPrice + flexValue).toFixed(2);
+      const qty = 4 + (i % 3);
       return {
         id: `r-${i + 1}-s-${sIdx + 1}`,
-        storeName: STORE_POOL[sIdx % STORE_POOL.length],
+        storeName,
         cnpj: cnpj(20 + i * 6 + sIdx),
         qty,
-        flexPct,                    // magnitude, positive — represents a discount
+        flexSigned,
+        flexPct: magnitude,
         flexValue,
         newPrice,
       };
@@ -269,7 +281,7 @@ window.FLEX_DATA = (function () {
 
     // Aggregates the parent product row uses to summarise its stores.
     const totalQty = stores.reduce((s, st) => s + st.qty, 0);
-    const flexPcts = stores.map(s => s.flexPct);
+    const flexPcts = stores.map(s => s.flexSigned);
     const newPrices = stores.map(s => s.newPrice);
     const minFlex = Math.min(...flexPcts);
     const maxFlex = Math.max(...flexPcts);
@@ -285,13 +297,13 @@ window.FLEX_DATA = (function () {
       soldBy: SOLD_BY_OPTIONS[i % SOLD_BY_OPTIONS.length],
       flexDiscount: i === 0,
       currentPrice,
-      flexPct: baseFlexPct,
-      flexValue: +(currentPrice * (baseFlexPct / 100)).toFixed(2),
+      flexPct: Math.abs(flexPcts[0] || 0),
+      flexValue: stores[0]?.flexValue || 0,
       minPct,
       maxPct,
       minValue: 2.06,
-      maxValue: 2.47,
-      finalPrice: +(currentPrice - currentPrice * (baseFlexPct / 100)).toFixed(2),
+      maxValue: 4.13,
+      finalPrice: stores[0]?.newPrice || currentPrice,
       qty: totalQty,
       total,
       outOfStock,
@@ -303,17 +315,17 @@ window.FLEX_DATA = (function () {
   });
 
   const DRAFT_CONTEXT = {
-    chainName: 'Chain Alpha',
+    chainName: 'Rede Alpha',
     storesCount: 20,
-    deliveryDate: 'Fri, Aug 1, 2026 and 2 others',
-    deliveryInstructions: 'Deliver to back-of-store dock. Driver to call store manager on arrival.',
-    paymentMethod: 'PIX',
+    deliveryDate: 'Sex., 1 ago. 2026 e mais 2',
+    deliveryInstructions: 'Entregar no doca dos fundos da loja. Motorista deve ligar para o gerente na chegada.',
+    paymentMethod: 'Pix',
     flexBalance: 15400.00,
     flexInOrder: 5463.99,
     estimatedAfterDelivery: 9542.03,
     perSeller: [
       {
-        name: 'Distributor Alpha',
+        name: 'Distribuidor Alpha',
         stores: 3,
         subtotal: 53573.93,
         deliveryFree: true,
@@ -331,25 +343,25 @@ window.FLEX_DATA = (function () {
   // SCREEN 5 — Drafts list (Order drafts hub)
   // ----------------------------------------------------------------------
   const STATUS_DEF = {
-    DRAFT:               { label: 'Draft',              tone: 'neutral' },
-    AWAITING_APPROVAL:   { label: 'Awaiting approval',  tone: 'warning' },
-    APPROVED:            { label: 'Approved',           tone: 'success' },
-    REJECTED:            { label: 'Rejected',           tone: 'error' },
-    COMPLETED:           { label: 'Completed',          tone: 'neutral' },
-    EXPIRED:             { label: 'Expired',            tone: 'neutral' },
-    PENDING:             { label: 'Pending review',     tone: 'warning' },
+    DRAFT:               { label: 'Rascunho',              tone: 'neutral' },
+    AWAITING_APPROVAL:   { label: 'Aguardando aprovação',  tone: 'warning' },
+    APPROVED:            { label: 'Aprovado',           tone: 'success' },
+    REJECTED:            { label: 'Rejeitado',           tone: 'error' },
+    COMPLETED:           { label: 'Concluído',          tone: 'neutral' },
+    EXPIRED:             { label: 'Expirado',            tone: 'neutral' },
+    PENDING:             { label: 'Em análise',     tone: 'warning' },
   };
 
   const WALLET_LEDGER_DEF = {
     committed: {
-      label: 'Committed',
+      label: 'Comprometido',
       tone: 'warning',
-      tooltip: 'Order is still in the delivery process',
+      tooltip: 'Pedido ainda está em processo de entrega',
     },
     released: {
-      label: 'Released',
+      label: 'Liberado',
       tone: 'success',
-      tooltip: 'Debited or credited from the balance',
+      tooltip: 'Debitado ou creditado do saldo',
     },
   };
 
@@ -359,7 +371,7 @@ window.FLEX_DATA = (function () {
       createdOn: 'Jan 6, 2026',
       updatedOn: 'Jan 6, 2026',
       lastUpdated: 'Jan 6, 2026',
-      chain: 'Ultra popular Market chain',
+      chain: 'Rede Ultra Popular',
       stores: 1,
       finalPrice: null,
       totalDiscount: null,
@@ -373,7 +385,7 @@ window.FLEX_DATA = (function () {
       createdOn: 'Jan 5, 2026',
       updatedOn: 'Jan 5, 2026',
       lastUpdated: 'Jan 6, 2026',
-      chain: 'Ultra popular Market chain',
+      chain: 'Rede Ultra Popular',
       stores: 5,
       finalPrice: null,
       totalDiscount: null,
@@ -388,7 +400,7 @@ window.FLEX_DATA = (function () {
       createdOn: 'Jan 3, 2026',
       updatedOn: 'Jan 3, 2026',
       lastUpdated: 'Jan 3, 2026',
-      chain: 'Beesmart Stores',
+      chain: 'Lojas Beesmart',
       stores: 6,
       finalPrice: 5425.52,
       totalDiscount: 271.27,
@@ -402,7 +414,7 @@ window.FLEX_DATA = (function () {
       createdOn: 'Jan 3, 2026',
       updatedOn: 'Jan 3, 2026',
       lastUpdated: 'Jan 3, 2026',
-      chain: 'Beauty Bee Stores',
+      chain: 'Lojas Beauty Bee',
       stores: 5,
       finalPrice: 4453.60,
       totalDiscount: 445.36,
@@ -416,7 +428,7 @@ window.FLEX_DATA = (function () {
       createdOn: 'Jan 2, 2026',
       updatedOn: 'Jan 2, 2026',
       lastUpdated: 'Feb 27, 2025',
-      chain: 'ShopNow Pharma',
+      chain: 'ShopNow Farma',
       stores: 5,
       finalPrice: 2642.92,
       totalDiscount: 528.40,
@@ -430,7 +442,7 @@ window.FLEX_DATA = (function () {
       createdOn: 'Dec 30, 2025',
       updatedOn: 'Dec 30, 2025',
       lastUpdated: 'Jan 15, 2015',
-      chain: 'Beauty Bee Stores',
+      chain: 'Lojas Beauty Bee',
       stores: 5,
       finalPrice: null,
       totalDiscount: null,
@@ -444,7 +456,7 @@ window.FLEX_DATA = (function () {
       createdOn: 'Dec 29, 2025',
       updatedOn: 'Dec 29, 2025',
       lastUpdated: 'Jan 6, 2025',
-      chain: 'Beesmart Stores',
+      chain: 'Lojas Beesmart',
       stores: 2,
       finalPrice: 4900.00,
       totalDiscount: 240.00,
@@ -458,7 +470,7 @@ window.FLEX_DATA = (function () {
       createdOn: 'Dec 29, 2025',
       updatedOn: 'Dec 29, 2025',
       lastUpdated: 'Dec 30, 2025',
-      chain: 'ShopNow Pharma',
+      chain: 'ShopNow Farma',
       stores: 1,
       finalPrice: 3000.00,
       totalDiscount: 240.00,
@@ -472,7 +484,7 @@ window.FLEX_DATA = (function () {
       createdOn: 'Dec 28, 2025',
       updatedOn: 'Dec 28, 2025',
       lastUpdated: 'Dec 30, 2025',
-      chain: 'Bees Beauty Store',
+      chain: 'Loja Bees Beauty',
       stores: 2,
       finalPrice: 1900.00,
       totalDiscount: 190.00,
@@ -486,7 +498,7 @@ window.FLEX_DATA = (function () {
       createdOn: 'Dec 27, 2025',
       updatedOn: 'Dec 27, 2025',
       lastUpdated: 'Dec 28, 2025',
-      chain: 'Ultra popular Market chain',
+      chain: 'Rede Ultra Popular',
       stores: 8,
       finalPrice: 7250.10,
       totalDiscount: 410.20,
@@ -557,7 +569,7 @@ window.FLEX_DATA = (function () {
 
   const WALLET = {
     available: HUB_FLEX.available,
-    openingBalanceLabel: 'Period budget',
+    openingBalanceLabel: 'Orçamento do período',
     totals: WALLET_TOTALS,
     entries: WALLET_ENTRIES,
   };
@@ -571,12 +583,12 @@ window.FLEX_DATA = (function () {
   // ----------------------------------------------------------------------
   const PAYMENT_METHODS = [
     { id: 'pix',      label: 'Pix' },
-    { id: 'slip-1',   label: 'Bank slip in 1 day' },
-    { id: 'slip-3',   label: 'Bank slip in 3 days' },
-    { id: 'slip-5',   label: 'Bank slip in 5 days' },
-    { id: 'slip-7',   label: 'Bank slip in 7 days' },
-    { id: 'slip-10',  label: 'Bank slip in 10 days' },
-    { id: 'slip-15',  label: 'Bank slip in 15 days' },
+    { id: 'slip-1',   label: 'Boleto em 1 dia' },
+    { id: 'slip-3',   label: 'Boleto em 3 dias' },
+    { id: 'slip-5',   label: 'Boleto em 5 dias' },
+    { id: 'slip-7',   label: 'Boleto em 7 dias' },
+    { id: 'slip-10',  label: 'Boleto em 10 dias' },
+    { id: 'slip-15',  label: 'Boleto em 15 dias' },
   ];
 
   return {

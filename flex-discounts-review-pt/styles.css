@@ -778,6 +778,48 @@ body.is-sales-rep .sr-only-block { display: flex; }
   width: 14px;
   height: 14px;
 }
+/* Draft view dropdown (by product / by store) */
+.draft-view-dropdown { position: relative; }
+.draft-view-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.draft-view-toggle hexa-icon { width: 14px; height: 14px; }
+.draft-view-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 20;
+  min-width: 200px;
+  padding: 6px;
+  background: var(--hexa-surface-primary);
+  border: 1px solid var(--hexa-border-default);
+  border-radius: var(--hexa-radius-md);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+.draft-view-dropdown.is-open .draft-view-menu { display: block; }
+.draft-view-menu-item {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: var(--hexa-radius-sm);
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  text-align: left;
+  color: var(--hexa-fg-neutral-primary);
+  cursor: pointer;
+}
+.draft-view-menu-item:hover { background: var(--hexa-neutral-50, #fafafa); }
+.draft-view-menu-item.is-active {
+  background: var(--hexa-brand-50, #fffef0);
+  font-weight: 600;
+}
+
 .draft-toolbar-save {
   margin-left: auto;
 }
@@ -995,6 +1037,28 @@ body.is-sales-rep .sr-only-block { display: flex; }
 .draft-row--store .store-newprice-input { width: 100%; }
 
 /* Store rows — children indented under their product parent */
+.draft-row--store-parent > .cell {
+  background: var(--hexa-surface-primary);
+}
+.draft-row--store-parent.is-odd:not(.is-selected) > .cell {
+  background: var(--hexa-neutral-50, #fafafa);
+}
+.draft-row--store-parent .store-name {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+}
+.draft-row--store-product {
+  background: var(--hexa-neutral-25, #fcfcfc);
+}
+.draft-row--store-product > .cell {
+  background: inherit;
+}
+.draft-row--store-product .prod-name {
+  font-size: 14px;
+  line-height: 20px;
+}
+
 .draft-row--store {
   background: var(--hexa-surface-primary);
   border-bottom: 1px solid var(--hexa-border-default);
@@ -1060,6 +1124,13 @@ body.is-sales-rep .sr-only-block { display: flex; }
   font-size: 14px;
   font-weight: 400;
   white-space: nowrap;
+}
+.bulk-bar-hint {
+  flex: 1 1 100%;
+  font-size: 13px;
+  line-height: 18px;
+  color: #b45309;
+  font-weight: 500;
 }
 .bulk-bar-cancel {
   background: transparent;

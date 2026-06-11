@@ -5,13 +5,15 @@ publishedAt: "2026-06-01"
 variant: A
 ---
 
-# Flex Full Flow Review
+# Revisão do fluxo Flex (PT-BR)
+
+**Protótipo:** `flex-discounts-review-pt` — cópia em português de `flex-discounts-review`.
 
 ## Hypothesis
-> Bringing the full flex-pricing flow into BEES Link (eliminating the BEES
-> One detour) increases sales-rep adoption of flex pricing and reduces
-> median time-to-approved-quote, without sacrificing pricing-edit
-> precision.
+> Trazer o fluxo completo de preço flex para o BEES Link (eliminando o
+> desvio pelo BEES One) aumenta a adoção de preço flex pelos representantes
+> e reduz o tempo mediano até cotação aprovada, sem perder precisão na
+> edição de preços.
 
 ## Variant
 **A** — full flex-pricing flow embedded inside BEES Link. A new
@@ -57,7 +59,7 @@ In that case we extend the test window and/or run one more cohort
 before deciding.
 
 ## Data
-Open [the participant dashboard](../_shared/dashboard.html?id=flex-discounts-review)
+Open [the participant dashboard](../_shared/dashboard.html?id=flex-discounts-review-pt)
 to see live metrics for *internal* sessions.
 
 This prototype is shared **publicly** with external distributor sales
@@ -72,10 +74,10 @@ tracker `<script>` tag to a centralised sink and update this section.
 
 ## Visibility & sharing
 - **Internal URL** (always, Microsoft sign-in required):
-  `https://<internal-host>/prototypes/flex-discounts-review/`
+  `https://<internal-host>/prototypes/flex-discounts-review-pt/`
 - **Public URL** (anonymous, **expires 30 days from `2026-06-01`** —
   bump `publishedAt` to extend):
-  `https://<public-host>/prototypes/flex-discounts-review/`
+  `https://<public-host>/prototypes/flex-discounts-review-pt/`
 
 Hostnames live in
 [`prototype-kit/.publish-config.json`](../../.publish-config.json). At
@@ -88,12 +90,12 @@ flow.
 
 Run `python3 ../../serve.py` from `link-ux-product/prototype-kit/` for
 local preview:
-- Prototype: `http://127.0.0.1:8765/prototypes/flex-discounts-review/`
-- Dashboard: `http://127.0.0.1:8765/prototypes/_shared/dashboard.html?id=flex-discounts-review`
+- Prototype: `http://127.0.0.1:8765/prototypes/flex-discounts-review-pt/`
+- Dashboard: `http://127.0.0.1:8765/prototypes/_shared/dashboard.html?id=flex-discounts-review-pt`
 
 ## Tracked CTA inventory
 All events flow into the shared tracker (`hypothesis-tracker.js`) with
-`prototypeId = "flex-discounts-review"` and `variant = "A"`.
+`prototypeId = "flex-discounts-review-pt"` and `variant = "A"`.
 
 | `data-track` id | Where | Why we care |
 |---|---|---|

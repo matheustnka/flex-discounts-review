@@ -1,6 +1,6 @@
 # Flex Full Flow Review — PM handoff
 
-**Prototype ID:** `flex-discounts-review`  
+**Prototype ID:** `flex-discounts-review-pt` (português — cópia de `flex-discounts-review`)
 **Variant:** A  
 **Last updated:** 3 June 2026  
 **Audience:** Product / design review (not a PRD)
@@ -30,8 +30,8 @@ python3 serve.py
 
 | Asset | URL |
 |--------|-----|
-| **Prototype** | http://127.0.0.1:8765/prototypes/flex-discounts-review/ |
-| **Metrics dashboard** | http://127.0.0.1:8765/prototypes/_shared/dashboard.html?id=flex-discounts-review |
+| **Prototype** | http://127.0.0.1:8765/prototypes/flex-discounts-review-pt/ |
+| **Metrics dashboard** | http://127.0.0.1:8765/prototypes/_shared/dashboard.html?id=flex-discounts-review-pt |
 
 ### Role
 

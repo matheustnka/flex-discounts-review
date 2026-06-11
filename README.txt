@@ -1,31 +1,30 @@
-Flex Full Flow Review — share package
-=====================================
+Revisão do fluxo Flex (PT) — pacote para compartilhar
+=====================================================
 
-This folder is self-contained. No install or server required.
+Esta pasta é autocontida. Não precisa instalar nem usar servidor.
 
-HOW TO OPEN THE PROTOTYPE
-  1. Unzip if you received a .zip file.
-  2. Keep this folder structure intact:
+COMO ABRIR O PROTÓTIPO
+  1. Descompacte se recebeu um arquivo .zip.
+  2. Mantenha esta estrutura de pastas:
        share-for-pm/
-         README.txt          (this file)
-         PM-EXPORT.md        (product handoff — start here)
-         flex-discounts-review/
-           index.html        ← double-click to open in browser
-         _shared/            (assets — do not move)
-  3. Open flex-discounts-review/index.html in Chrome or Edge.
-  4. Use the Demo role toggle (bottom-right): Sales rep vs Retailer.
+         README.txt          (este arquivo)
+         PM-EXPORT.md        (handoff de produto — comece aqui)
+         flex-discounts-review-pt/
+           index.html        ← abra no Chrome ou Edge
+         _shared/            (assets — não mova)
+  3. Abra flex-discounts-review-pt/index.html no Chrome ou Edge.
+  4. Use o alternador Perfil de demonstração (canto inferior direito): Representante de vendas vs Varejista.
 
-PM HANDOFF
-  Read PM-EXPORT.md in this folder for hypothesis, walkthroughs, flex rules,
-  and review questions.
+HANDOFF PARA PM
+  Leia PM-EXPORT.md nesta pasta para hipótese, roteiros, regras flex e perguntas de revisão.
 
-KEY FLOW (sales rep)
-  PO upload → Cart → Save as draft → Payment method → Edit flex on products
-  → Save changes (summary) → Send for approval → Place order
+FLUXO PRINCIPAL (representante)
+  Upload OC → Caminhão → Salvar como rascunho → Forma de pagamento → Editar flex nos produtos
+  → Resumo automático → Enviar para aprovação → Fazer pedido
 
-NOTES
-  - All data is mocked (no real CNPJs, prices, or customers).
-  - Events stay in the browser only (localStorage); nothing is sent to a server.
-  - Repo: Azure DevOps bees-link-ai-scripts → link-ux-product/prototype-kit/prototypes/flex-discounts-review (master)
+NOTAS
+  - Todos os dados são simulados (sem CNPJs, preços ou clientes reais).
+  - Eventos ficam apenas no navegador (localStorage); nada é enviado a servidor.
+  - Protótipo em português (pt-BR): flex-discounts-review-pt
 
-Prepared by Beatriz Garcia · Link Ops (Midna)
+Preparado por Beatriz Garcia · Link Ops (Midna)
