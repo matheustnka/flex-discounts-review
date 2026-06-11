@@ -255,21 +255,8 @@
       <div class="pinlist">
         <div class="ahead"><span class="anum">SCREEN</span><h4>Home</h4></div>
         <p class="scap">Entry point + flex balance teaser.</p>
-        <div class="pi"><span class="pn">1</span><span class="pt"><b>Homepage</b><span>Welcome banner + <b>Pedido</b> menu entry point.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
+        <div class="pi"><span class="pn">1</span><span class="pt"><b>Homepage</b><span>Banner is <b>nice-to-have</b>; the <b>Pedido</b> menu entry point is the requirement.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
         <div class="pi"><span class="pn">9</span><span class="pt"><b>Flex Wallet</b><span>Available flex balance card → "Ir para carteira flex".</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
-      </div>
-    </div>
-
-    <!-- PO UPLOAD -->
-    <div class="annot">
-      <a class="shotwrap" href="shots/po-upload.png" target="_blank">
-        <img src="shots/po-upload.png" alt="PO upload screen">
-        <span class="pin" style="left:48.88%;top:38%">7</span>
-      </a>
-      <div class="pinlist">
-        <div class="ahead"><span class="anum">SCREEN</span><h4>PO upload</h4></div>
-        <p class="scap">Where the order-taking flow starts today.</p>
-        <div class="pi"><span class="pn">7</span><span class="pt"><b>Creation & Upload of Spreadsheet</b><span>"Pedido por arquivo" — file drop that kicks off the flow.</span><span class="trk"><span class="dot" style="background:var(--t-sheet)"></span>Spreadsheet / data</span></span></div>
       </div>
     </div>
 
@@ -316,7 +303,7 @@
       <div class="pinlist">
         <div class="ahead"><span class="anum">SCREEN</span><h4>Products + flex</h4></div>
         <p class="scap">The heart of the flow — five pieces land here.</p>
-        <div class="pi"><span class="pn">7</span><span class="pt"><b>Spreadsheet (locked)</b><span>"Aplicar preços por planilha" — discounts/prices only.</span><span class="trk"><span class="dot" style="background:var(--t-sheet)"></span>Spreadsheet / data</span></span></div>
+        <div class="pi"><span class="pn">7</span><span class="pt"><b>Creation & Upload of Spreadsheet</b><span>Download a draft's product list, adjust prices, re-upload — "Aplicar preços por planilha" (locked: discounts/prices only).</span><span class="trk"><span class="dot" style="background:var(--t-sheet)"></span>Spreadsheet / data</span></span></div>
         <div class="pi"><span class="pn">11</span><span class="pt"><b>Apply Flex Price (%)</b><span>Bulk "Aplicar preço flex %" + Aplicar.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
         <div class="pi"><span class="pn">6</span><span class="pt"><b>New Screen in Flex in NFA</b><span>Flex % / Novo preço per product, qty per product.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
         <div class="pi"><span class="pn">8</span><span class="pt"><b>Reuse of Endpoint Information</b><span>Summary cards (original / discounts / final) from endpoint.</span><span class="trk"><span class="dot" style="background:var(--t-sheet)"></span>Spreadsheet / data</span></span></div>
@@ -328,15 +315,15 @@
     <div class="annot">
       <a class="shotwrap" href="shots/drafts.png" target="_blank">
         <img src="shots/drafts.png" alt="Order drafts hub">
-        <span class="pin" style="left:48.88%;top:13.17%">12</span>
+        <span class="pin" style="left:50%;top:35.5%">12</span>
         <span class="pin" style="left:17.01%;top:29.61%">4</span>
         <span class="pin" style="left:82.19%;top:29.61%">13</span>
       </a>
       <div class="pinlist">
         <div class="ahead"><span class="anum">SCREEN</span><h4>Order drafts hub</h4></div>
-        <p class="scap">List of quotations + their status.</p>
-        <div class="pi"><span class="pn">12</span><span class="pt"><b>New Endpoint for Group Quotation</b><span>(Backend) feeds the overview/summary cards.</span><span class="trk"><span class="dot" style="background:var(--t-cot)"></span>Group quotation</span></span></div>
-        <div class="pi"><span class="pn">4</span><span class="pt"><b>Reuse of Group Quotation Name</b><span>"Nome do rascunho" — reusable across quotations.</span><span class="trk"><span class="dot" style="background:var(--t-cot)"></span>Group quotation</span></span></div>
+        <p class="scap">List of group quotations + their status.</p>
+        <div class="pi"><span class="pn">12</span><span class="pt"><b>New Endpoint for Group Quotation <span style="color:var(--warn)">(must validate)</span></b><span>Brand-new backend endpoint that creates &amp; manages group quotations — this whole list runs off it. Distinct from #8.</span><span class="trk"><span class="dot" style="background:var(--t-cot)"></span>Group quotation</span></span></div>
+        <div class="pi"><span class="pn">4</span><span class="pt"><b>Reuse of Group Quotation Name <span style="color:var(--info)">(nice-to-have)</span></b><span>"Nome do rascunho" — reusable across quotations.</span><span class="trk"><span class="dot" style="background:var(--t-cot)"></span>Group quotation</span></span></div>
         <div class="pi"><span class="pn">13</span><span class="pt"><b>Approval Flow</b><span>Status: Aguardando aprovação / Aprovado / Concluído.</span><span class="trk"><span class="dot" style="background:var(--t-close)"></span>Order / approval</span></span></div>
       </div>
     </div>
@@ -350,7 +337,7 @@
       <div class="pinlist">
         <div class="ahead"><span class="anum">SCREEN</span><h4>Flex wallet</h4></div>
         <p class="scap">Ledger tab on the drafts hub.</p>
-        <div class="pi"><span class="pn">9</span><span class="pt"><b>Development of Flex Wallet</b><span>Ledger with Comprometido / Liberado status + filters.</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
+        <div class="pi"><span class="pn">9</span><span class="pt"><b>Development of Flex Wallet</b><span>Balance is core; the <b>transaction history</b> ledger (Comprometido / Liberado) is <b>nice-to-have</b>.</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
       </div>
     </div>
 
@@ -410,13 +397,13 @@
         </div>
         <div class="card" style="--track:var(--t-cot)">
           <div class="top"><div class="num">12</div><div><h4>New Endpoint for Group Quotation</h4>
-            <div class="badges"><span class="b track be">Backend</span><span class="b dur">5d</span></div></div></div>
-          <p class="what">New endpoint to manage group quotations (create, read, reuse). Backs pieces 3, 4 and 8.</p>
+            <div class="badges"><span class="b track be">Backend</span><span class="b dur">5d</span><span class="b tbd">must validate</span></div></div></div>
+          <p class="what"><b>Brand-new</b> backend endpoint to create &amp; manage group quotations — genuinely new work (<b>must validate</b> feasibility). Distinct from #8, which only reuses endpoint data for the summary cards.</p>
           <div class="deltas">
             <div class="delta now"><span class="k">Today</span><span class="v">No dedicated API — flow runs via spreadsheet/BEES One.</span></div>
             <div class="delta fut"><span class="k">Prototype</span><span class="v">API serving the cart, name reuse and summary cards.</span></div>
           </div>
-          <a class="screenref" href="shots/drafts.png" target="_blank"><img src="shots/thumb-drafts.png" alt=""><span class="cap"><span class="where">📍 Backend — feeds Drafts hub</span>No own screen. Powers the <b>Rascunhos de pedido</b> list + summary cards.</span></a>
+          <a class="screenref" href="shots/drafts.png" target="_blank"><img src="shots/thumb-drafts.png" alt=""><span class="cap"><span class="where">📍 Backend — powers the list</span>No own UI. The <b>Rascunhos de pedido</b> (group quotations) list runs off this new endpoint.</span></a>
           <div class="dep">⚙ <b>Enables:</b> pieces 4 and 8.</div>
         </div>
         <div class="card" style="--track:var(--t-fe)">
@@ -442,12 +429,12 @@
         <div class="card" style="--track:var(--t-sheet)">
           <div class="top"><div class="num">7</div><div><h4>Creation and Upload of Spreadsheet</h4>
             <div class="badges"><span class="b track" style="background:var(--t-sheet)">Spreadsheet</span><span class="b dur">5d</span></div></div></div>
-          <p class="what">Spreadsheet locked to editing <b>only discounts/prices</b> (reuse of existing data — does not recreate from scratch).</p>
+          <p class="what"><b>Download a draft's product list</b>, adjust prices, and <b>re-upload</b> it. Spreadsheet locked to <b>only discounts/prices</b> (data reused — not recreated). <span style="color:var(--g500)">Not the initial PO upload.</span></p>
           <div class="deltas">
             <div class="delta now"><span class="k">Today</span><span class="v">Open spreadsheet, recreates data, error-prone.</span></div>
             <div class="delta fut"><span class="k">Prototype</span><span class="v">Locked spreadsheet: discounts/prices only, data reused.</span></div>
           </div>
-          <a class="screenref" href="shots/po-upload.png" target="_blank"><img src="shots/thumb-po-upload.png" alt=""><span class="cap"><span class="where">📍 PO upload + in-flow modal</span><b>Pedido por arquivo</b> (flow start) & <b>Aplicar preços por planilha</b> on the products table.</span></a>
+          <a class="screenref" href="shots/order-products.png" target="_blank"><img src="shots/thumb-order-products.png" alt=""><span class="cap"><span class="where">📍 Products table modal</span><b>Aplicar preços por planilha</b> (download template + re-upload) + <b>Download</b> action on each draft row.</span></a>
         </div>
       </div>
     </div>
@@ -459,7 +446,7 @@
       <div class="cards">
         <div class="card" style="--track:var(--t-cot)">
           <div class="top"><div class="num">4</div><div><h4>Reuse of Group Quotation Name</h4>
-            <div class="badges"><span class="b track" style="background:var(--t-cot)">Quotation</span><span class="b dur">2d</span></div></div></div>
+            <div class="badges"><span class="b track" style="background:var(--t-cot)">Quotation</span><span class="b dur">2d</span><span class="b nice">nice-to-have</span></div></div></div>
           <p class="what">Reuse the name of an already-created group quotation. Requires the cart development to work.</p>
           <div class="deltas">
             <div class="delta now"><span class="k">Today</span><span class="v">Name retyped for every quotation.</span></div>
@@ -491,7 +478,7 @@
         </div>
         <div class="card" style="--track:var(--t-wallet)">
           <div class="top"><div class="num">9</div><div><h4>Development of Flex Wallet</h4>
-            <div class="badges"><span class="b track" style="background:var(--t-wallet)">Wallet</span><span class="b dur">8d</span><span class="b fe">frontend</span><span class="b be">backend</span></div></div></div>
+            <div class="badges"><span class="b track" style="background:var(--t-wallet)">Wallet</span><span class="b dur">8d</span><span class="b fe">frontend</span><span class="b be">backend</span><span class="b nice">history = nice-to-have</span></div></div></div>
           <p class="what">Backend and frontend implementation of the flex wallet — balance, ledger (committed/released), cart integration. <b>The largest single piece.</b></p>
           <div class="deltas">
             <div class="delta now"><span class="k">Today</span><span class="v">No flex wallet in the flow.</span></div>
