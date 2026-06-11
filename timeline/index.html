@@ -127,13 +127,23 @@
   .screenref .cap .where{display:block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--yellow-dark);margin-bottom:2px}
   .screenref .cap b{color:var(--g900)}
 
-  /* ===== GALLERY ===== */
-  .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:34px}
-  .gshot{text-decoration:none;background:var(--white);border:1px solid var(--g200);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);transition:transform .12s,box-shadow .12s}
-  .gshot:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-  .gshot img{width:100%;height:128px;object-fit:cover;object-position:top left;display:block;border-bottom:1px solid var(--g200)}
-  .gshot .gl{padding:9px 12px;font-size:12.5px;font-weight:700;color:var(--g800);display:flex;align-items:center;gap:7px}
-  .gshot .gl .gnum{font-size:10px;font-weight:800;background:var(--g900);color:var(--bees);padding:2px 6px;border-radius:5px;font-family:var(--mono)}
+  /* ===== ANNOTATED SCREENS (pins on full prints) ===== */
+  .annot{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start;margin-bottom:26px;background:#fff;border:1px solid var(--g200);border-radius:var(--r-xl);padding:18px;box-shadow:var(--shadow)}
+  .shotwrap{position:relative;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--g200);background:var(--g100)}
+  .shotwrap img{width:100%;display:block}
+  .pin{position:absolute;transform:translate(-50%,-50%);width:32px;height:32px;background:var(--bees);border:2.5px solid #000;border-radius:99px;color:#000;font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:center;font-family:var(--font);z-index:2;box-shadow:0 0 0 4px rgba(255,255,0,.4),0 3px 9px rgba(0,0,0,.45)}
+  .ahead{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .ahead .anum{font-size:11px;font-weight:800;background:var(--g900);color:var(--bees);padding:3px 9px;border-radius:6px;font-family:var(--mono)}
+  .ahead h4{font-size:18px;font-weight:800;letter-spacing:-.3px}
+  .pinlist .scap{font-size:12px;color:var(--g500);margin-bottom:14px}
+  .pinlist .pi{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--g200)}
+  .pinlist .pi:last-child{border-bottom:none}
+  .pinlist .pn{flex:0 0 auto;width:24px;height:24px;background:var(--bees);border:2px solid #000;color:#000;border-radius:99px;font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center}
+  .pinlist .pt b{display:block;font-size:13px;color:var(--g900);line-height:1.3}
+  .pinlist .pt span{font-size:12px;color:var(--g600)}
+  .pinlist .pt .trk{display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-top:3px;color:var(--g500)}
+  .pinlist .pt .trk .dot{width:8px;height:8px;border-radius:99px}
+  @media(max-width:860px){.annot{grid-template-columns:1fr}}
 
   /* ===== SUMMARY BARS ===== */
   .bars{display:flex;flex-direction:column;gap:13px;margin-top:8px}
@@ -232,16 +242,116 @@
     <p class="sec-lede">The 14 pieces, ordered into 5 waves by the dependencies stated in the brief (the cart must exist before name reuse; the endpoint before the summary cards). Color = work track. Each card carries the prototype screen where that piece lands — click any shot to open it full.</p>
 
     <a id="screens"></a>
-    <p style="font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--g500);margin:0 0 12px">The prototype, screen by screen <span style="font-weight:600;text-transform:none;letter-spacing:0;color:var(--g400)">— captured from GitHub Pages</span></p>
-    <div class="gallery">
-      <a class="gshot" href="shots/home.png" target="_blank"><img src="shots/thumb-home.png" alt="Home"><span class="gl"><span class="gnum">1·9</span>Home — banner, menu, flex balance</span></a>
-      <a class="gshot" href="shots/po-upload.png" target="_blank"><img src="shots/thumb-po-upload.png" alt="PO upload"><span class="gl"><span class="gnum">7</span>PO upload — flow start</span></a>
-      <a class="gshot" href="shots/cart.png" target="_blank"><img src="shots/thumb-cart.png" alt="Cart"><span class="gl"><span class="gnum">2·3</span>Cart — save as draft, balance</span></a>
-      <a class="gshot" href="shots/order-draft.png" target="_blank"><img src="shots/thumb-order-draft.png" alt="Payment method"><span class="gl"><span class="gnum">5</span>Payment method step</span></a>
-      <a class="gshot" href="shots/order-products.png" target="_blank"><img src="shots/thumb-order-products.png" alt="Products + flex"><span class="gl"><span class="gnum">6·8·11</span>Products — flex %, summary</span></a>
-      <a class="gshot" href="shots/drafts.png" target="_blank"><img src="shots/thumb-drafts.png" alt="Order drafts hub"><span class="gl"><span class="gnum">4·13</span>Order drafts — names, status</span></a>
-      <a class="gshot" href="shots/wallet.png" target="_blank"><img src="shots/thumb-wallet.png" alt="Flex wallet"><span class="gl"><span class="gnum">9</span>Flex wallet — ledger</span></a>
-      <a class="gshot" href="shots/order-products.png" target="_blank"><img src="shots/thumb-order-products.png" alt="Place order"><span class="gl"><span class="gnum">10</span>Send for approval → place order</span></a>
+    <p style="font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--g500);margin:0 0 4px">The prototype, screen by screen <span style="font-weight:600;text-transform:none;letter-spacing:0;color:var(--g400)">— captured from GitHub Pages</span></p>
+    <p class="sec-lede" style="margin-bottom:26px">Each <span style="display:inline-flex;width:18px;height:18px;background:var(--bees);border:2px solid #000;border-radius:99px;font-size:10px;font-weight:900;align-items:center;justify-content:center;vertical-align:middle">N</span> pin on a print is the development piece number from the timeline below. Click any screen to open the full-resolution capture.</p>
+
+    <!-- HOME -->
+    <div class="annot">
+      <a class="shotwrap" href="shots/home.png" target="_blank">
+        <img src="shots/home.png" alt="Home screen">
+        <span class="pin" style="left:48.88%;top:20.49%">1</span>
+        <span class="pin" style="left:12.38%;top:33.79%">9</span>
+      </a>
+      <div class="pinlist">
+        <div class="ahead"><span class="anum">SCREEN</span><h4>Home</h4></div>
+        <p class="scap">Entry point + flex balance teaser.</p>
+        <div class="pi"><span class="pn">1</span><span class="pt"><b>Homepage</b><span>Welcome banner + <b>Pedido</b> menu entry point.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
+        <div class="pi"><span class="pn">9</span><span class="pt"><b>Flex Wallet</b><span>Available flex balance card → "Ir para carteira flex".</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
+      </div>
+    </div>
+
+    <!-- PO UPLOAD -->
+    <div class="annot">
+      <a class="shotwrap" href="shots/po-upload.png" target="_blank">
+        <img src="shots/po-upload.png" alt="PO upload screen">
+        <span class="pin" style="left:48.88%;top:38%">7</span>
+      </a>
+      <div class="pinlist">
+        <div class="ahead"><span class="anum">SCREEN</span><h4>PO upload</h4></div>
+        <p class="scap">Where the order-taking flow starts today.</p>
+        <div class="pi"><span class="pn">7</span><span class="pt"><b>Creation & Upload of Spreadsheet</b><span>"Pedido por arquivo" — file drop that kicks off the flow.</span><span class="trk"><span class="dot" style="background:var(--t-sheet)"></span>Spreadsheet / data</span></span></div>
+      </div>
+    </div>
+
+    <!-- CART -->
+    <div class="annot">
+      <a class="shotwrap" href="shots/cart.png" target="_blank">
+        <img src="shots/cart.png" alt="Cart screen">
+        <span class="pin" style="left:81.98%;top:10.16%">3</span>
+        <span class="pin" style="left:81.98%;top:33.58%">9</span>
+        <span class="pin" style="left:81.98%;top:38.54%">2</span>
+      </a>
+      <div class="pinlist">
+        <div class="ahead"><span class="anum">SCREEN</span><h4>Cart (caminhão)</h4></div>
+        <p class="scap">The "Resumo do pedido" panel carries three pieces.</p>
+        <div class="pi"><span class="pn">3</span><span class="pt"><b>Group Quotation Creation</b><span>Quotation is born in the cart, not the spreadsheet.</span><span class="trk"><span class="dot" style="background:var(--t-cot)"></span>Group quotation</span></span></div>
+        <div class="pi"><span class="pn">9</span><span class="pt"><b>Flex Wallet</b><span>Wallet balance shown right inside the cart.</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
+        <div class="pi"><span class="pn">2</span><span class="pt"><b>Changes to the Cart</b><span>"Salvar como rascunho" — save as draft button.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
+      </div>
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="annot">
+      <a class="shotwrap" href="shots/order-draft.png" target="_blank">
+        <img src="shots/order-draft.png" alt="Payment method screen">
+        <span class="pin" style="left:48.88%;top:21.71%">5</span>
+      </a>
+      <div class="pinlist">
+        <div class="ahead"><span class="anum">SCREEN</span><h4>Payment method</h4></div>
+        <p class="scap">New step before the products table.</p>
+        <div class="pi"><span class="pn">5</span><span class="pt"><b>New Screen in NFA — Payment method</b><span>"Selecione uma forma de pagamento" (Pix / Boleto).</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="annot">
+      <a class="shotwrap" href="shots/order-products.png" target="_blank">
+        <img src="shots/order-products.png" alt="Products + flex screen">
+        <span class="pin" style="left:40.04%;top:16.41%">7</span>
+        <span class="pin" style="left:62.43%;top:20.08%">11</span>
+        <span class="pin" style="left:46.16%;top:23.13%">6</span>
+        <span class="pin" style="left:82.68%;top:19.87%">8</span>
+        <span class="pin" style="left:82.68%;top:34.24%">10</span>
+      </a>
+      <div class="pinlist">
+        <div class="ahead"><span class="anum">SCREEN</span><h4>Products + flex</h4></div>
+        <p class="scap">The heart of the flow — five pieces land here.</p>
+        <div class="pi"><span class="pn">7</span><span class="pt"><b>Spreadsheet (locked)</b><span>"Aplicar preços por planilha" — discounts/prices only.</span><span class="trk"><span class="dot" style="background:var(--t-sheet)"></span>Spreadsheet / data</span></span></div>
+        <div class="pi"><span class="pn">11</span><span class="pt"><b>Apply Flex Price (%)</b><span>Bulk "Aplicar preço flex %" + Aplicar.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
+        <div class="pi"><span class="pn">6</span><span class="pt"><b>New Screen in Flex in NFA</b><span>Flex % / Novo preço per product, qty per product.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
+        <div class="pi"><span class="pn">8</span><span class="pt"><b>Reuse of Endpoint Information</b><span>Summary cards (original / discounts / final) from endpoint.</span><span class="trk"><span class="dot" style="background:var(--t-sheet)"></span>Spreadsheet / data</span></span></div>
+        <div class="pi"><span class="pn">10</span><span class="pt"><b>Place Order Process</b><span>"Enviar para aprovação" → place order.</span><span class="trk"><span class="dot" style="background:var(--t-close)"></span>Order / approval</span></span></div>
+      </div>
+    </div>
+
+    <!-- DRAFTS -->
+    <div class="annot">
+      <a class="shotwrap" href="shots/drafts.png" target="_blank">
+        <img src="shots/drafts.png" alt="Order drafts hub">
+        <span class="pin" style="left:48.88%;top:13.17%">12</span>
+        <span class="pin" style="left:17.01%;top:29.61%">4</span>
+        <span class="pin" style="left:82.19%;top:29.61%">13</span>
+      </a>
+      <div class="pinlist">
+        <div class="ahead"><span class="anum">SCREEN</span><h4>Order drafts hub</h4></div>
+        <p class="scap">List of quotations + their status.</p>
+        <div class="pi"><span class="pn">12</span><span class="pt"><b>New Endpoint for Group Quotation</b><span>(Backend) feeds the overview/summary cards.</span><span class="trk"><span class="dot" style="background:var(--t-cot)"></span>Group quotation</span></span></div>
+        <div class="pi"><span class="pn">4</span><span class="pt"><b>Reuse of Group Quotation Name</b><span>"Nome do rascunho" — reusable across quotations.</span><span class="trk"><span class="dot" style="background:var(--t-cot)"></span>Group quotation</span></span></div>
+        <div class="pi"><span class="pn">13</span><span class="pt"><b>Approval Flow</b><span>Status: Aguardando aprovação / Aprovado / Concluído.</span><span class="trk"><span class="dot" style="background:var(--t-close)"></span>Order / approval</span></span></div>
+      </div>
+    </div>
+
+    <!-- WALLET -->
+    <div class="annot">
+      <a class="shotwrap" href="shots/wallet.png" target="_blank">
+        <img src="shots/wallet.png" alt="Flex wallet ledger">
+        <span class="pin" style="left:48.88%;top:29.3%">9</span>
+      </a>
+      <div class="pinlist">
+        <div class="ahead"><span class="anum">SCREEN</span><h4>Flex wallet</h4></div>
+        <p class="scap">Ledger tab on the drafts hub.</p>
+        <div class="pi"><span class="pn">9</span><span class="pt"><b>Development of Flex Wallet</b><span>Ledger with Comprometido / Liberado status + filters.</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
+      </div>
     </div>
 
     <div class="legend">
