@@ -140,7 +140,9 @@
   .pinlist .pi{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--g200)}
   .pinlist .pi:last-child{border-bottom:none}
   .pinlist .pn{flex:0 0 auto;width:24px;height:24px;background:var(--bees);border:2px solid #000;color:#000;border-radius:99px;font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center}
-  .pinlist .pt b{display:block;font-size:13px;color:var(--g900);line-height:1.3}
+  .pinlist .pt > b{display:block;font-size:13px;color:var(--g900);line-height:1.3}
+  .pinlist .pdur{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;background:var(--g900);color:var(--bees);padding:1px 6px;border-radius:5px;margin-left:6px;vertical-align:middle}
+  .pinlist .pdur.tbd{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn-bd)}
   .pinlist .pt span{font-size:12px;color:var(--g600)}
   .pinlist .pt .trk{display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-top:3px;color:var(--g500)}
   .pinlist .pt .trk .dot{width:8px;height:8px;border-radius:99px}
@@ -240,107 +242,7 @@
   <div class="wrap">
     <span class="eyebrow">The path</span>
     <h2 class="sec">Development timeline</h2>
-    <p class="sec-lede">The 14 pieces, ordered into 5 waves by the dependencies stated in the brief (the cart must exist before name reuse; the endpoint before the summary cards). Color = work track. Each card carries the prototype screen where that piece lands — click any shot to open it full.</p>
-
-    <a id="screens"></a>
-    <p style="font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--g500);margin:0 0 4px">The prototype, screen by screen <span style="font-weight:600;text-transform:none;letter-spacing:0;color:var(--g400)">— captured from GitHub Pages</span></p>
-    <p class="sec-lede" style="margin-bottom:26px">Each <span style="display:inline-flex;width:18px;height:18px;background:var(--bees);border:2px solid #000;border-radius:99px;font-size:10px;font-weight:900;align-items:center;justify-content:center;vertical-align:middle">N</span> pin on a print is the development piece number from the timeline below. Click any screen to open the full-resolution capture.</p>
-
-    <!-- HOME -->
-    <div class="annot">
-      <a class="shotwrap" href="shots/home.png" target="_blank">
-        <img src="shots/home.png" alt="Home screen">
-        <span class="pin" style="left:48.88%;top:20.49%">1</span>
-        <span class="pin" style="left:12.38%;top:33.79%">9</span>
-      </a>
-      <div class="pinlist">
-        <div class="ahead"><span class="anum">SCREEN</span><h4>Home</h4></div>
-        <p class="scap">Entry point + flex balance teaser.</p>
-        <div class="pi"><span class="pn">1</span><span class="pt"><b>Homepage</b><span>Banner is <b>nice-to-have</b>; the <b>Pedido</b> menu entry point is the requirement.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
-        <div class="pi"><span class="pn">9</span><span class="pt"><b>Flex Wallet <span style="color:#4338CA">(next phase)</span></b><span>Available flex balance card → "Ir para carteira flex". Nice-to-have / next phase.</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
-      </div>
-    </div>
-
-    <!-- CART -->
-    <div class="annot">
-      <a class="shotwrap" href="shots/cart.png" target="_blank">
-        <img src="shots/cart.png" alt="Cart screen">
-        <span class="pin" style="left:81.98%;top:10.16%">3</span>
-        <span class="pin" style="left:81.98%;top:33.58%">9</span>
-        <span class="pin" style="left:81.98%;top:38.54%">2</span>
-      </a>
-      <div class="pinlist">
-        <div class="ahead"><span class="anum">SCREEN</span><h4>Cart (caminhão)</h4></div>
-        <p class="scap">The "Resumo do pedido" panel carries three pieces.</p>
-        <div class="pi"><span class="pn">3</span><span class="pt"><b>Group Quotation Creation</b><span>Quotation is born in the cart, not the spreadsheet.</span><span class="trk"><span class="dot" style="background:var(--t-cot)"></span>Group quotation</span></span></div>
-        <div class="pi"><span class="pn">9</span><span class="pt"><b>Flex Wallet <span style="color:#4338CA">(next phase)</span></b><span>Wallet balance inside the cart — nice-to-have / next phase.</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
-        <div class="pi"><span class="pn">2</span><span class="pt"><b>Changes to the Cart</b><span>"Salvar como rascunho" — save as draft button.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
-      </div>
-    </div>
-
-    <!-- PAYMENT -->
-    <div class="annot">
-      <a class="shotwrap" href="shots/order-draft.png" target="_blank">
-        <img src="shots/order-draft.png" alt="Payment method screen">
-        <span class="pin" style="left:48.88%;top:21.71%">5</span>
-      </a>
-      <div class="pinlist">
-        <div class="ahead"><span class="anum">SCREEN</span><h4>Payment method</h4></div>
-        <p class="scap">New step before the products table.</p>
-        <div class="pi"><span class="pn">5</span><span class="pt"><b>New Screen in NFA — Payment method</b><span>"Selecione uma forma de pagamento" (Pix / Boleto).</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
-      </div>
-    </div>
-
-    <!-- PRODUCTS -->
-    <div class="annot">
-      <a class="shotwrap" href="shots/order-products.png" target="_blank">
-        <img src="shots/order-products.png" alt="Products + flex screen">
-        <span class="pin" style="left:40.04%;top:16.41%">7</span>
-        <span class="pin" style="left:62.43%;top:20.08%">11</span>
-        <span class="pin" style="left:46.16%;top:23.13%">6</span>
-        <span class="pin" style="left:82.68%;top:19.87%">8</span>
-        <span class="pin" style="left:82.68%;top:34.24%">10</span>
-      </a>
-      <div class="pinlist">
-        <div class="ahead"><span class="anum">SCREEN</span><h4>Products + flex</h4></div>
-        <p class="scap">The heart of the flow — five pieces land here.</p>
-        <div class="pi"><span class="pn">7</span><span class="pt"><b>Creation & Upload of Spreadsheet</b><span>Download a draft's product list, adjust prices, re-upload — "Aplicar preços por planilha" (locked: discounts/prices only).</span><span class="trk"><span class="dot" style="background:var(--t-sheet)"></span>Spreadsheet / data</span></span></div>
-        <div class="pi"><span class="pn">11</span><span class="pt"><b>Apply Flex Price (%)</b><span>Bulk "Aplicar preço flex %" + Aplicar.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
-        <div class="pi"><span class="pn">6</span><span class="pt"><b>New Screen in Flex in NFA</b><span>Flex % / Novo preço per product, qty per product.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
-        <div class="pi"><span class="pn">8</span><span class="pt"><b>Reuse of Endpoint Information</b><span>Summary cards (original / discounts / final) from endpoint.</span><span class="trk"><span class="dot" style="background:var(--t-sheet)"></span>Spreadsheet / data</span></span></div>
-        <div class="pi"><span class="pn">10</span><span class="pt"><b>Place Order Process</b><span>"Enviar para aprovação" → place order.</span><span class="trk"><span class="dot" style="background:var(--t-close)"></span>Order / approval</span></span></div>
-      </div>
-    </div>
-
-    <!-- DRAFTS -->
-    <div class="annot">
-      <a class="shotwrap" href="shots/drafts.png" target="_blank">
-        <img src="shots/drafts.png" alt="Order drafts hub">
-        <span class="pin" style="left:50%;top:35.5%">12</span>
-        <span class="pin" style="left:17.01%;top:29.61%">4</span>
-        <span class="pin" style="left:82.19%;top:29.61%">13</span>
-      </a>
-      <div class="pinlist">
-        <div class="ahead"><span class="anum">SCREEN</span><h4>Order drafts hub</h4></div>
-        <p class="scap">List of group quotations + their status.</p>
-        <div class="pi"><span class="pn">12</span><span class="pt"><b>New Endpoint for Group Quotation <span style="color:var(--warn)">(must validate)</span></b><span>Brand-new backend endpoint that creates &amp; manages group quotations — this whole list runs off it. Distinct from #8.</span><span class="trk"><span class="dot" style="background:var(--t-cot)"></span>Group quotation</span></span></div>
-        <div class="pi"><span class="pn">4</span><span class="pt"><b>Reuse of Group Quotation Name <span style="color:var(--info)">(nice-to-have)</span></b><span>"Nome do rascunho" — reusable across quotations.</span><span class="trk"><span class="dot" style="background:var(--t-cot)"></span>Group quotation</span></span></div>
-        <div class="pi"><span class="pn">13</span><span class="pt"><b>Approval Flow</b><span>Status: Aguardando aprovação / Aprovado / Concluído.</span><span class="trk"><span class="dot" style="background:var(--t-close)"></span>Order / approval</span></span></div>
-      </div>
-    </div>
-
-    <!-- WALLET -->
-    <div class="annot">
-      <a class="shotwrap" href="shots/wallet.png" target="_blank">
-        <img src="shots/wallet.png" alt="Flex wallet ledger">
-        <span class="pin" style="left:48.88%;top:29.3%">9</span>
-      </a>
-      <div class="pinlist">
-        <div class="ahead"><span class="anum">SCREEN</span><h4>Flex wallet</h4></div>
-        <p class="scap">Ledger tab on the drafts hub.</p>
-        <div class="pi"><span class="pn">9</span><span class="pt"><b>Development of Flex Wallet <span style="color:#4338CA">(next phase)</span></b><span>The whole wallet — <b>balance + transaction history</b> (Comprometido / Liberado) — is <b>nice-to-have / next phase</b>.</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
-      </div>
-    </div>
+    <p class="sec-lede">The 14 pieces, ordered into 5 waves by the dependencies stated in the brief (the cart must exist before name reuse; the endpoint before the summary cards). Color = work track; the <span style="font-family:var(--mono);font-size:12px;background:var(--g900);color:var(--bees);padding:1px 7px;border-radius:5px">Nd</span> badge is the brief's effort estimate. The annotated prototype screens follow further down.</p>
 
     <div class="legend">
       <span class="lg"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span>
@@ -555,6 +457,112 @@
       <div class="bar"><span class="name"><span class="dot" style="background:var(--t-close)"></span>Order / approval</span><div class="track"><div class="fill" style="width:8.5%;background:var(--t-close)">4d</div></div><span class="d">4d</span></div>
     </div>
     <p style="font-size:12.5px;color:var(--g500);margin-top:16px">Frontend = pieces 1,2,5,6,11 · Quotation = 3,4,12 · Wallet = 9 · QA = 14 · Spreadsheet/data = 7 (+8 TBD) · Order/approval = 10,13. Countable total: <b>47 days</b>.</p>
+  </div>
+</section>
+
+<!-- ===== ANNOTATED PROTOTYPE SCREENS ===== -->
+<section style="background:var(--g50);border-top:1px solid var(--g200)">
+  <div class="wrap">
+    <a id="screens"></a>
+    <span class="eyebrow">On the screen</span>
+    <h2 class="sec">The prototype, screen by screen</h2>
+    <p class="sec-lede">Captured from GitHub Pages. Each <span style="display:inline-flex;width:18px;height:18px;background:var(--bees);border:2px solid #000;border-radius:99px;font-size:10px;font-weight:900;align-items:center;justify-content:center;vertical-align:middle">N</span> pin is the development piece from the list above; the <span style="font-family:var(--mono);font-size:11px;background:var(--g900);color:var(--bees);padding:1px 6px;border-radius:5px">Nd</span> next to each is its effort. Click any screen to open the full-resolution capture.</p>
+
+    <!-- HOME -->
+    <div class="annot">
+      <a class="shotwrap" href="shots/home.png" target="_blank">
+        <img src="shots/home.png" alt="Home screen">
+        <span class="pin" style="left:48.88%;top:20.49%">1</span>
+        <span class="pin" style="left:12.38%;top:33.79%">9</span>
+      </a>
+      <div class="pinlist">
+        <div class="ahead"><span class="anum">SCREEN</span><h4>Home</h4></div>
+        <p class="scap">Entry point + flex balance teaser.</p>
+        <div class="pi"><span class="pn">1</span><span class="pt"><b>Homepage <span class="pdur">3d</span></b><span>Banner is <b>nice-to-have</b>; the <b>Pedido</b> menu entry point is the requirement.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
+        <div class="pi"><span class="pn">9</span><span class="pt"><b>Flex Wallet <span style="color:#4338CA">(next phase)</span> <span class="pdur">8d</span></b><span>Available flex balance card → "Ir para carteira flex". Nice-to-have / next phase.</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
+      </div>
+    </div>
+
+    <!-- CART -->
+    <div class="annot">
+      <a class="shotwrap" href="shots/cart.png" target="_blank">
+        <img src="shots/cart.png" alt="Cart screen">
+        <span class="pin" style="left:81.98%;top:10.16%">3</span>
+        <span class="pin" style="left:81.98%;top:33.58%">9</span>
+        <span class="pin" style="left:81.98%;top:38.54%">2</span>
+      </a>
+      <div class="pinlist">
+        <div class="ahead"><span class="anum">SCREEN</span><h4>Cart (caminhão)</h4></div>
+        <p class="scap">The "Resumo do pedido" panel carries three pieces.</p>
+        <div class="pi"><span class="pn">3</span><span class="pt"><b>Group Quotation Creation <span class="pdur">5d</span></b><span>Quotation is born in the cart, not the spreadsheet.</span><span class="trk"><span class="dot" style="background:var(--t-cot)"></span>Group quotation</span></span></div>
+        <div class="pi"><span class="pn">9</span><span class="pt"><b>Flex Wallet <span style="color:#4338CA">(next phase)</span> <span class="pdur">8d</span></b><span>Wallet balance inside the cart — nice-to-have / next phase.</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
+        <div class="pi"><span class="pn">2</span><span class="pt"><b>Changes to the Cart <span class="pdur">2d</span></b><span>"Salvar como rascunho" — save as draft button (add button core; balance = next phase).</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
+      </div>
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="annot">
+      <a class="shotwrap" href="shots/order-draft.png" target="_blank">
+        <img src="shots/order-draft.png" alt="Payment method screen">
+        <span class="pin" style="left:48.88%;top:21.71%">5</span>
+      </a>
+      <div class="pinlist">
+        <div class="ahead"><span class="anum">SCREEN</span><h4>Payment method</h4></div>
+        <p class="scap">New step before the products table.</p>
+        <div class="pi"><span class="pn">5</span><span class="pt"><b>New Screen in NFA — Payment method <span class="pdur">2d</span></b><span>"Selecione uma forma de pagamento" (Pix / Boleto).</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="annot">
+      <a class="shotwrap" href="shots/order-products.png" target="_blank">
+        <img src="shots/order-products.png" alt="Products + flex screen">
+        <span class="pin" style="left:40.04%;top:16.41%">7</span>
+        <span class="pin" style="left:62.43%;top:20.08%">11</span>
+        <span class="pin" style="left:46.16%;top:23.13%">6</span>
+        <span class="pin" style="left:82.68%;top:19.87%">8</span>
+        <span class="pin" style="left:82.68%;top:34.24%">10</span>
+      </a>
+      <div class="pinlist">
+        <div class="ahead"><span class="anum">SCREEN</span><h4>Products + flex</h4></div>
+        <p class="scap">The heart of the flow — five pieces land here.</p>
+        <div class="pi"><span class="pn">7</span><span class="pt"><b>Creation & Upload of Spreadsheet <span class="pdur">5d</span></b><span>Download a draft's product list, adjust prices, re-upload — "Aplicar preços por planilha" (locked: discounts/prices only).</span><span class="trk"><span class="dot" style="background:var(--t-sheet)"></span>Spreadsheet / data</span></span></div>
+        <div class="pi"><span class="pn">11</span><span class="pt"><b>Apply Flex Price (%) <span class="pdur">3d</span></b><span>Bulk "Aplicar preço flex %" + Aplicar.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
+        <div class="pi"><span class="pn">6</span><span class="pt"><b>New Screen in Flex in NFA <span class="pdur">2d</span></b><span>Flex % / Novo preço per product, qty per product.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
+        <div class="pi"><span class="pn">8</span><span class="pt"><b>Reuse of Endpoint Information <span class="pdur tbd">TBD</span></b><span>Summary cards (original / discounts / final) from endpoint.</span><span class="trk"><span class="dot" style="background:var(--t-sheet)"></span>Spreadsheet / data</span></span></div>
+        <div class="pi"><span class="pn">10</span><span class="pt"><b>Place Order Process <span class="pdur">2d</span></b><span>"Enviar para aprovação" → place order.</span><span class="trk"><span class="dot" style="background:var(--t-close)"></span>Order / approval</span></span></div>
+      </div>
+    </div>
+
+    <!-- DRAFTS -->
+    <div class="annot">
+      <a class="shotwrap" href="shots/drafts.png" target="_blank">
+        <img src="shots/drafts.png" alt="Order drafts hub">
+        <span class="pin" style="left:50%;top:35.5%">12</span>
+        <span class="pin" style="left:17.01%;top:29.61%">4</span>
+        <span class="pin" style="left:82.19%;top:29.61%">13</span>
+      </a>
+      <div class="pinlist">
+        <div class="ahead"><span class="anum">SCREEN</span><h4>Order drafts hub</h4></div>
+        <p class="scap">List of group quotations + their status.</p>
+        <div class="pi"><span class="pn">12</span><span class="pt"><b>New Endpoint for Group Quotation <span style="color:var(--warn)">(must validate)</span> <span class="pdur">5d</span></b><span>Brand-new backend endpoint that creates &amp; manages group quotations — this whole list runs off it. Distinct from #8.</span><span class="trk"><span class="dot" style="background:var(--t-cot)"></span>Group quotation</span></span></div>
+        <div class="pi"><span class="pn">4</span><span class="pt"><b>Reuse of Group Quotation Name <span style="color:var(--info)">(nice-to-have)</span> <span class="pdur">2d</span></b><span>"Nome do rascunho" — reusable across quotations.</span><span class="trk"><span class="dot" style="background:var(--t-cot)"></span>Group quotation</span></span></div>
+        <div class="pi"><span class="pn">13</span><span class="pt"><b>Approval Flow <span class="pdur">2d</span></b><span>Status: Aguardando aprovação / Aprovado / Concluído.</span><span class="trk"><span class="dot" style="background:var(--t-close)"></span>Order / approval</span></span></div>
+      </div>
+    </div>
+
+    <!-- WALLET -->
+    <div class="annot">
+      <a class="shotwrap" href="shots/wallet.png" target="_blank">
+        <img src="shots/wallet.png" alt="Flex wallet ledger">
+        <span class="pin" style="left:48.88%;top:29.3%">9</span>
+      </a>
+      <div class="pinlist">
+        <div class="ahead"><span class="anum">SCREEN</span><h4>Flex wallet</h4></div>
+        <p class="scap">Ledger tab on the drafts hub.</p>
+        <div class="pi"><span class="pn">9</span><span class="pt"><b>Development of Flex Wallet <span style="color:#4338CA">(next phase)</span> <span class="pdur">8d</span></b><span>The whole wallet — <b>balance + transaction history</b> (Comprometido / Liberado) — is <b>nice-to-have / next phase</b>.</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
+      </div>
+    </div>
   </div>
 </section>
 
