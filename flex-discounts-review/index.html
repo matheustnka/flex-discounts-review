@@ -1,0 +1,2481 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Flex Full Flow Review — Prototype</title>
+  <link rel="stylesheet" href="../_shared/hexa-tokens.css" />
+  <link rel="stylesheet" href="../_shared/hexa-components.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="../_shared/hexa.js" defer></script>
+  <script src="data.js"></script>
+  <script
+    src="../_shared/hypothesis-tracker.js"
+    data-prototype-id="flex-discounts-review"
+    data-hypothesis="Bringing the full flex-pricing flow into BEES Link (eliminating the BEES One detour) increases sales-rep adoption of flex pricing and reduces median time-to-approved-quote, without sacrificing pricing-edit precision."
+    data-variant="A"></script>
+</head>
+<body>
+
+  <!-- ================================================================
+       BEES Top bar — two rows (primary + secondary nav).
+       Secondary nav has an "Order" dropdown with two destinations:
+         · Order by PO file
+         · Order drafts   (sales-rep only)
+       ================================================================ -->
+  <header class="bees-topbar">
+    <div class="bees-topbar-row bees-topbar-row--primary">
+      <a class="bees-logo" href="#home" aria-label="BEES home" data-track="nav-logo">
+        <img src="../_shared/bees-logo.png" alt="BEES" />
+      </a>
+      <div class="bees-search">
+        <hexa-icon name="SearchIcon"></hexa-icon>
+        <input type="search" placeholder="Search on BEES" data-track="topbar-search" aria-label="Search on BEES" />
+        <button class="bees-search-go" aria-label="Search" data-track="topbar-search-submit"><hexa-icon name="SearchIcon"></hexa-icon></button>
+      </div>
+      <div class="bees-account">
+        <hexa-icon name="StoreIcon"></hexa-icon>
+        <span class="bees-account-id">00.000.000/0001-11</span>
+        <span class="bees-account-name">Chain Alpha…</span>
+        <hexa-icon name="ChevronDownIcon"></hexa-icon>
+      </div>
+      <div class="bees-topbar-actions">
+        <button class="bees-icon-btn" aria-label="Account" data-track="topbar-account"><hexa-icon name="UserIcon"></hexa-icon></button>
+        <button class="bees-icon-btn" aria-label="Cart" data-track="topbar-cart" onclick="location.hash='#cart'">
+          <hexa-icon name="CartIcon"></hexa-icon>
+          <span class="bees-icon-badge" id="cartBadge">11</span>
+        </button>
+      </div>
+    </div>
+    <nav class="bees-topbar-row bees-topbar-row--secondary" aria-label="Primary">
+      <div class="bees-nav-left">
+        <a href="#" data-track="nav-categories" class="bees-nav-link">Product categories <hexa-icon name="ChevronDownIcon"></hexa-icon></a>
+
+        <div class="bees-nav-dropdown" id="orderDropdown">
+          <button type="button" class="bees-nav-link bees-nav-link--has-menu" data-track="nav-order" onclick="toggleNav('orderDropdown', event)" aria-haspopup="true" aria-expanded="false">
+            Order <hexa-icon name="ChevronDownIcon"></hexa-icon>
+          </button>
+          <div class="bees-nav-menu" role="menu">
+            <a href="#drafts" class="bees-nav-menu-item" data-track="nav-order-drafts" role="menuitem" onclick="closeNav()">Order drafts</a>
+            <a href="#" class="bees-nav-menu-item" data-track="nav-order-products" role="menuitem" onclick="closeNav()">Order by products</a>
+            <a href="#po-upload" class="bees-nav-menu-item" data-track="nav-order-po" role="menuitem" onclick="closeNav()">Order by PO file</a>
+            <a href="#" class="bees-nav-menu-item" data-track="nav-order-spreadsheet" role="menuitem" onclick="closeNav()">Order by BEES spreadsheet</a>
+            <a href="#" class="bees-nav-menu-item" data-track="nav-order-history" role="menuitem" onclick="closeNav()">Order history</a>
+          </div>
+        </div>
+
+        <a href="#" data-track="nav-commercial" class="bees-nav-link">Commercial management <hexa-icon name="ChevronDownIcon"></hexa-icon></a>
+      </div>
+      <div class="bees-nav-right">
+        <a href="#" data-track="nav-sellers" class="bees-nav-link">Sellers <hexa-icon name="ChevronDownIcon"></hexa-icon></a>
+        <a href="#" data-track="nav-help" class="bees-nav-link">Help &amp; Support</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="app-shell">
+
+    <!-- ============================================================
+         SCREEN 0 — BEES Home (entry point of the prototype).
+         Mirrors the BEES Link homepage: hero promo banner, the flex
+         balance card with a CTA into the wallet, and a "Get familiar
+         with BEES" quick-action grid. The active path for this
+         hypothesis is the "Order with PO file" card.
+         ============================================================ -->
+    <section id="home" data-screen>
+      <!-- Hero promo banner (decorative; static carousel chrome only) -->
+      <div class="home-hero" role="region" aria-label="Promotional banner">
+        <button class="home-hero-arrow home-hero-arrow--prev" aria-label="Previous slide" data-track="home-hero-prev">
+          <hexa-icon name="ChevronLeftIcon"></hexa-icon>
+        </button>
+        <div class="home-hero-slide">
+          <div class="home-hero-copy">
+            <p class="home-hero-eyebrow">Welcome to BEES</p>
+            <h2 class="home-hero-title">Discover what BEES has<br />for your business</h2>
+          </div>
+        </div>
+        <button class="home-hero-arrow home-hero-arrow--next" aria-label="Next slide" data-track="home-hero-next">
+          <hexa-icon name="ChevronRightIcon"></hexa-icon>
+        </button>
+        <div class="home-hero-dots" aria-hidden="true">
+          <span class="home-hero-dot is-active"></span>
+          <span class="home-hero-dot"></span>
+          <span class="home-hero-dot"></span>
+        </div>
+      </div>
+
+      <!-- Flex balance card — anchors the home view + introduces the wallet CTA -->
+      <section class="home-flex-card" aria-labelledby="homeFlexTitle">
+        <div class="home-flex-row home-flex-row--head">
+          <div class="home-flex-head">
+            <h3 id="homeFlexTitle" class="home-flex-title">
+              Available flex balance
+              <span class="home-flex-info" aria-label="What is the flex balance?"><hexa-icon name="InfoIcon"></hexa-icon></span>
+            </h3>
+            <div class="home-flex-amount" id="homeFlexAvailable">$15,400.00</div>
+          </div>
+            <a href="#drafts" class="hexa-btn hexa-btn--secondary home-flex-cta" data-track="home-flex-wallet-cta" onclick="goToDraftsTab('wallet', event)">
+              Go to flex wallet
+            </a>
+        </div>
+        <dl class="home-flex-rows">
+          <div class="home-flex-line">
+            <dt>Flexible pricing for orders in draft</dt>
+            <dd class="text-status-success" id="homeFlexForDrafts">- $5,463.99</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- "Get familiar with BEES" quick-action grid — Order with PO file is the live path -->
+      <section class="home-quick" aria-labelledby="homeQuickTitle">
+        <h3 id="homeQuickTitle" class="home-quick-title">Get familiar with BEES</h3>
+        <p class="home-quick-lede">Take advantage of all we have for you.</p>
+        <div class="home-quick-grid">
+          <a href="#drafts" class="home-quick-card" data-track="home-card-drafts">
+            <span class="home-quick-icon" aria-hidden="true"><hexa-icon name="FolderIcon"></hexa-icon></span>
+            <span class="home-quick-label">Order drafts</span>
+          </a>
+          <a href="#" class="home-quick-card" data-track="home-card-by-products">
+            <span class="home-quick-icon" aria-hidden="true"><hexa-icon name="ClipboardIcon"></hexa-icon></span>
+            <span class="home-quick-label">Order by products</span>
+          </a>
+          <a href="#" class="home-quick-card" data-track="home-card-by-spreadsheet">
+            <span class="home-quick-icon" aria-hidden="true"><hexa-icon name="FileIcon"></hexa-icon></span>
+            <span class="home-quick-label">Order with BEES spreadsheet</span>
+          </a>
+          <a href="#po-upload" class="home-quick-card" data-track="home-card-by-po">
+            <span class="home-quick-icon" aria-hidden="true"><hexa-icon name="UploadFileIcon"></hexa-icon></span>
+            <span class="home-quick-label">Order with PO file</span>
+          </a>
+          <a href="#" class="home-quick-card" data-track="home-card-recent">
+            <span class="home-quick-icon" aria-hidden="true"><hexa-icon name="TruckIcon"></hexa-icon></span>
+            <span class="home-quick-label">Check your recent orders</span>
+          </a>
+          <a href="#" class="home-quick-card" data-track="home-card-invoices">
+            <span class="home-quick-icon" aria-hidden="true"><hexa-icon name="InvoiceIcon"></hexa-icon></span>
+            <span class="home-quick-label">Manage your invoices</span>
+          </a>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- ============================================================
+         SCREEN 1 — PO Upload (simplified wizard entry)
+         ============================================================ -->
+    <section id="po-upload" data-screen hidden>
+      <h1 class="page-title">Order by PO file</h1>
+      <p class="page-lede">Place orders with purchase order files. Once they are processed, products will be added to your truck.</p>
+
+      <ol class="step-indicator" aria-label="Upload steps">
+        <li class="step is-active"><span class="step-dot">1</span><span class="step-label">File upload</span></li>
+        <li class="step"><span class="step-dot"></span><span class="step-label">File analysis</span></li>
+        <li class="step"><span class="step-dot"></span><span class="step-label">Product review</span></li>
+        <li class="step"><span class="step-dot"></span><span class="step-label">Preferred sellers</span></li>
+        <li class="step"><span class="step-dot"></span><span class="step-label">Catalog review</span></li>
+      </ol>
+
+      <div class="po-section">
+        <h2 class="po-section-title">File upload</h2>
+        <p class="po-section-sub">You can upload up to 30 files.</p>
+
+        <label class="dropzone" data-track="po-dropzone">
+          <input type="file" hidden multiple accept=".doc,.docx,.xls,.xlsx,.csv,.pdf" />
+          <hexa-icon name="UploadIcon"></hexa-icon>
+          <div class="dropzone-text">
+            <strong>Drag your file(s) here or <span class="dropzone-browse">Browse</span></strong>
+            <span class="text-body-sm text-fg-neutral-tertiary">We support only DOC, DOCX, XLS, XLSX, CSV, or PDF files. Maximum size of 20MB per file.</span>
+          </div>
+        </label>
+
+        <h3 class="po-uploaded-title">Uploaded files</h3>
+        <div class="po-uploaded-empty">
+          <hexa-illustration name="EmptyBox"></hexa-illustration>
+          <strong>No files</strong>
+          <span class="text-body-sm text-fg-neutral-tertiary">Uploaded files will be displayed in this section.</span>
+        </div>
+      </div>
+
+      <div class="po-actions">
+        <button class="hexa-btn hexa-btn--primary hexa-btn--lg" data-track="cta-po-continue" onclick="continueFromPo()">
+          Continue
+          <hexa-icon name="ArrowRightIcon"></hexa-icon>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SCREEN 2 — Cart with "Save as draft"
+         ============================================================ -->
+    <section id="cart" data-screen hidden>
+      <div class="cart-tabs">
+        <button class="page-tab" aria-selected="true" data-track="cart-tab-truck">Truck</button>
+        <button class="page-tab" data-track="cart-tab-unavailable">
+          Unavailable products <span class="tab-badge">228</span>
+        </button>
+      </div>
+
+      <div class="cart-layout">
+        <!-- LEFT: per-store list ----------------------------- -->
+        <div class="cart-stores" id="cartStores"></div>
+
+        <!-- RIGHT: order summary ----------------------------- -->
+        <aside class="cart-summary" id="cartSummary"></aside>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SCREEN 3 / 4 — Order Draft (DRAFT, PENDING, APPROVED)
+         ============================================================ -->
+    <section id="order-draft" data-screen hidden>
+      <div class="draft-page-head">
+        <div class="draft-title-row">
+          <h1 class="page-title">
+            <span id="draftChainName">Chain Alpha</span>
+            <span id="draftStatusPill" class="status-pill is-neutral">Draft</span>
+          </h1>
+          <button
+            type="button"
+            id="paymentSaveBtn"
+            class="hexa-btn hexa-btn--primary draft-head-cta"
+            data-track="cta-payment-save-changes"
+            onclick="onPaymentSave()"
+            disabled
+            hidden>
+            Save changes
+          </button>
+        </div>
+
+        <div class="draft-meta-row" id="draftMetaRow"></div>
+
+        <div id="draftApproverBanner" hidden></div>
+      </div>
+
+      <!-- Payment-method picker — shown after Save-as-draft, before products.
+           Hidden once the rep commits a method via Save changes. -->
+      <section id="paymentStep" class="payment-step" hidden aria-labelledby="paymentStepDesc">
+        <p id="paymentStepDesc" class="payment-step-lede">
+          Select a payment method for this quote. Product prices may change
+          depending on the selected method.
+        </p>
+        <div id="paymentList" class="payment-list" role="radiogroup" aria-label="Payment method"></div>
+      </section>
+
+      <div class="draft-layout" id="draftLayout">
+        <!-- LEFT: instructions + filters + table -------------------- -->
+        <div class="draft-main">
+
+          <p class="draft-instructions">
+            To edit product prices, enter a flex % and click Apply (or edit a row).
+            Use - before the number for discount. The summary updates as you edit.
+          </p>
+
+          <div class="draft-toolbar">
+            <div class="draft-search">
+              <span class="hexa-input-wrap draft-search-wrap">
+                <hexa-icon name="SearchIcon"></hexa-icon>
+                <input class="hexa-input draft-search-input" placeholder="Search by product name, EAN" data-track="cta-draft-search" />
+              </span>
+            </div>
+            <button type="button" class="filter-toggle filter-toggle--stores" data-track="cta-draft-store-filter">
+              All stores
+              <hexa-icon name="ChevronDownIcon"></hexa-icon>
+            </button>
+            <button type="button" class="hexa-btn hexa-btn--secondary hexa-btn--sm" data-track="cta-draft-spreadsheet-open" onclick="openSpreadsheetModal()">
+              Apply discounts via spreadsheet
+            </button>
+          </div>
+
+          <!-- Bulk actions — always visible; Apply / Delete require a selection. -->
+          <div class="draft-table-shell">
+            <div class="bulk-bar" id="bulkBar" role="region" aria-label="Bulk actions">
+              <span class="bulk-bar-count" id="bulkBarCount">0 selected</span>
+              <button type="button" class="bulk-bar-cancel" data-track="bulk-clear" onclick="clearSelection()">Cancel</button>
+              <span class="bulk-bar-spacer"></span>
+              <div class="bulk-apply">
+                <label class="bulk-apply-label" for="bulkPct">Apply flex price %</label>
+                <span class="hexa-input-wrap bulk-pct-wrap">
+                  <input class="hexa-input" id="bulkPct" type="text" inputmode="decimal" value="" aria-label="Flex price percentage for selected products" />
+                  <span class="hexa-input-suffix">%</span>
+                </span>
+                <button type="button" class="hexa-btn hexa-btn--secondary hexa-btn--sm" id="bulkApplyBtn" data-track="cta-flex-bulk-apply" disabled>Apply</button>
+              </div>
+              <button type="button" class="row-action" id="bulkDeleteBtn" aria-label="Delete selected products" data-track="cta-flex-bulk-delete" onclick="bulkDelete()" disabled>
+                <hexa-icon name="TrashIcon"></hexa-icon>
+              </button>
+            </div>
+
+            <!-- Products table — header + rows rendered by JS -->
+            <div class="draft-table" id="draftTable" role="table" aria-label="Order draft products"></div>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination">
+            <span class="meta">1 - 10 of 28</span>
+            <div class="pages">
+              <button class="page-btn" data-track="draft-page-first" disabled><hexa-icon name="ChevronLeftIcon"></hexa-icon></button>
+              <button class="page-btn" data-track="draft-page-prev" disabled><hexa-icon name="ChevronLeftIcon"></hexa-icon></button>
+              <button class="page-btn is-current" data-track="draft-page-1">1</button>
+              <button class="page-btn" data-track="draft-page-2">2</button>
+              <button class="page-btn" data-track="draft-page-3">3</button>
+              <button class="page-btn" data-track="draft-page-next"><hexa-icon name="ChevronRightIcon"></hexa-icon></button>
+              <button class="page-btn" data-track="draft-page-last"><hexa-icon name="ChevronRightIcon"></hexa-icon></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: cart summary + Available flex balance card -->
+        <aside class="draft-sidebar" id="draftSidebar"></aside>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SCREEN 5 — Order drafts hub
+         ============================================================ -->
+    <section id="drafts" data-screen hidden>
+      <div class="drafts-head">
+        <div>
+          <h1 class="page-title">Order drafts</h1>
+        </div>
+        <div class="drafts-head-actions">
+          <button class="hexa-btn hexa-btn--secondary" data-track="cta-drafts-download-report">
+            <hexa-icon name="DownloadIcon"></hexa-icon>
+            Download report
+          </button>
+          <button class="hexa-btn hexa-btn--primary" data-track="cta-drafts-create-new" onclick="createNewDraftFromHub()">
+            Create new
+          </button>
+        </div>
+      </div>
+
+      <div class="drafts-overview">
+        <!-- Card 1: Available flex balance -->
+        <article class="hexa-card overview-card">
+          <div class="overview-card-title">Available flex balance</div>
+          <div class="overview-card-value" id="hubFlexAvailable">$15,400.00</div>
+          <hr class="overview-divider" />
+          <div class="overview-card-row">
+            <span class="overview-row-label">After adjustments to draft orders</span>
+            <span class="overview-row-value" id="hubFlexAfterDraft">$9,542.03</span>
+          </div>
+        </article>
+
+        <!-- Card 2: Total discounts -->
+        <article class="hexa-card overview-card">
+          <div class="overview-card-title">Total discounts</div>
+          <div class="overview-card-value overview-card-value--discount" id="hubDiscountsTotal">-$1,218.47</div>
+          <p class="overview-card-desc">Debited from flex balance when orders are placed.</p>
+          <hr class="overview-divider" />
+          <div class="overview-card-row">
+            <span class="overview-row-label">
+              Draft orders
+              <span class="overview-tooltip-wrap overview-tooltip-wrap--wide" data-tooltip="Sum of all orders, including those under approval">
+                <hexa-icon name="InfoIcon" class="overview-info-icon"></hexa-icon>
+              </span>
+            </span>
+            <span class="overview-row-value overview-row-value--discount" id="hubDiscountsDraft">-$363.54</span>
+          </div>
+        </article>
+
+        <!-- Card 3: Total price increases -->
+        <article class="hexa-card overview-card">
+          <div class="overview-card-title">Total price increases</div>
+          <div class="overview-card-value overview-card-value--increase" id="hubIncreasesTotal">+$490.00</div>
+          <p class="overview-card-desc">Credited to flex balance after delivery. Subject to approval.</p>
+          <hr class="overview-divider" />
+          <div class="overview-card-row">
+            <span class="overview-row-label">
+              Draft orders
+              <span class="overview-tooltip-wrap overview-tooltip-wrap--wide" data-tooltip="Sum of all orders, including those under approval">
+                <hexa-icon name="InfoIcon" class="overview-info-icon"></hexa-icon>
+              </span>
+            </span>
+            <span class="overview-row-value overview-row-value--increase" id="hubIncreasesDraft">+$150.00</span>
+          </div>
+        </article>
+      </div>
+
+      <!-- Tab navigation -->
+      <div class="drafts-tab-nav">
+        <button class="drafts-tab-btn is-active" data-tab="orders" onclick="switchDraftsTab('orders')" data-track="cta-drafts-tab-orders">Order drafts</button>
+        <button class="drafts-tab-btn" data-tab="wallet" onclick="switchDraftsTab('wallet')" data-track="cta-drafts-tab-wallet">Flex wallet</button>
+      </div>
+
+      <!-- Tab 1: Order drafts table -->
+      <div id="draftsTabOrders" class="drafts-tab-pane">
+        <div class="drafts-filter">
+          <button class="filter-toggle" data-track="cta-drafts-filter">
+            Filter
+            <hexa-icon name="ChevronDownIcon"></hexa-icon>
+          </button>
+          <span class="hexa-input-wrap drafts-search">
+            <hexa-icon name="SearchIcon"></hexa-icon>
+            <input class="hexa-input" placeholder="Search by CNPJ or chain name" data-track="cta-drafts-search" />
+          </span>
+        </div>
+
+        <div class="drafts-table">
+          <div class="drafts-row drafts-row--head">
+            <div class="cell">Order draft name</div>
+            <div class="cell">Created on</div>
+            <div class="cell">Stores</div>
+            <div class="cell">Price adjustments</div>
+            <div class="cell">Final price</div>
+            <div class="cell">Status</div>
+            <div class="cell cell-action">Actions</div>
+          </div>
+          <div id="draftsRows"></div>
+          <div class="pagination">
+            <span class="meta">1 - 25 of 50</span>
+            <div class="pages">
+              <button class="page-btn" data-track="drafts-page-first" disabled><hexa-icon name="ChevronLeftIcon"></hexa-icon></button>
+              <button class="page-btn" data-track="drafts-page-prev" disabled><hexa-icon name="ChevronLeftIcon"></hexa-icon></button>
+              <button class="page-btn is-current" data-track="drafts-page-1">1</button>
+              <button class="page-btn" data-track="drafts-page-2">2</button>
+              <button class="page-btn" data-track="drafts-page-3">3</button>
+              <button class="page-btn" data-track="drafts-page-4">4</button>
+              <button class="page-btn" data-track="drafts-page-5">5</button>
+              <button class="page-btn" data-track="drafts-page-next"><hexa-icon name="ChevronRightIcon"></hexa-icon></button>
+              <button class="page-btn" data-track="drafts-page-last"><hexa-icon name="ChevronRightIcon"></hexa-icon></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Flex wallet (table only, overview comes from the cards above) -->
+      <div id="draftsTabWallet" class="drafts-tab-pane" hidden>
+        <div class="drafts-filter">
+          <div class="wallet-chips">
+            <button class="wallet-chip is-active" data-track="cta-wallet-filter" data-filter="all" onclick="setWalletFilter('all', event)">All</button>
+            <button class="wallet-chip" data-track="cta-wallet-filter" data-filter="committed" onclick="setWalletFilter('committed', event)">Committed</button>
+            <button class="wallet-chip" data-track="cta-wallet-filter" data-filter="released" onclick="setWalletFilter('released', event)">Released</button>
+          </div>
+        </div>
+
+        <div class="drafts-table">
+          <div class="drafts-row drafts-row--head drafts-row--wallet">
+            <div class="cell">Order name</div>
+            <div class="cell">Order date</div>
+            <div class="cell">Amount</div>
+            <div class="cell">Status</div>
+          </div>
+          <div id="walletRowsInTab"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================================
+         SCREEN — Flex wallet (per-draft ins and outs vs. balance)
+         ============================================================ -->
+    <section id="wallet" data-screen hidden>
+      <div class="drafts-head">
+        <div>
+          <h1 class="page-title">Flex wallet</h1>
+          <p class="page-lede">See how every draft moves the available balance — what's committed, what's locked, what's been consumed, and what came back.</p>
+        </div>
+        <div class="drafts-head-actions">
+          <button class="hexa-btn hexa-btn--secondary" data-track="cta-wallet-export">
+            <hexa-icon name="DownloadIcon"></hexa-icon>
+            Export ledger
+          </button>
+        </div>
+      </div>
+
+      <article class="hexa-card wallet-hero">
+        <div class="wallet-hero-main">
+          <div class="flex-hero-label">
+            Available flex balance
+            <hexa-icon name="InfoIcon"></hexa-icon>
+          </div>
+          <div class="flex-hero-value" id="walletAvailable">$0.00</div>
+        </div>
+        <div class="wallet-hero-grid">
+          <div class="wallet-stat">
+            <span class="wallet-stat-tag wallet-stat-tag--committed">Committed</span>
+            <strong id="walletCommitted">$0.00</strong>
+            <span class="wallet-stat-sub">In drafts you can still edit or release.</span>
+          </div>
+          <div class="wallet-stat">
+            <span class="wallet-stat-tag wallet-stat-tag--active">Active</span>
+            <strong id="walletActive">$0.00</strong>
+            <span class="wallet-stat-sub">Approved drafts awaiting fulfilment.</span>
+          </div>
+          <div class="wallet-stat">
+            <span class="wallet-stat-tag wallet-stat-tag--consumed">Consumed</span>
+            <strong id="walletConsumed">$0.00</strong>
+            <span class="wallet-stat-sub">Permanently spent on completed orders.</span>
+          </div>
+          <div class="wallet-stat">
+            <span class="wallet-stat-tag wallet-stat-tag--released">Released</span>
+            <strong id="walletReleased" class="text-status-success">+$0.00</strong>
+            <span class="wallet-stat-sub">Returned to available — rejected or expired.</span>
+          </div>
+        </div>
+      </article>
+
+      <div class="wallet-filters" role="tablist" aria-label="Filter movements">
+        <button class="wallet-chip is-active" data-track="cta-wallet-filter" data-filter="all" onclick="setWalletFilter('all', event)">All</button>
+        <button class="wallet-chip" data-track="cta-wallet-filter" data-filter="committed" onclick="setWalletFilter('committed', event)">Committed</button>
+        <button class="wallet-chip" data-track="cta-wallet-filter" data-filter="active" onclick="setWalletFilter('active', event)">Active</button>
+        <button class="wallet-chip" data-track="cta-wallet-filter" data-filter="consumed" onclick="setWalletFilter('consumed', event)">Consumed</button>
+        <button class="wallet-chip" data-track="cta-wallet-filter" data-filter="released" onclick="setWalletFilter('released', event)">Released</button>
+      </div>
+
+      <div class="wallet-table">
+        <div class="wallet-row wallet-row--head">
+          <div class="cell">Date</div>
+          <div class="cell">Draft #</div>
+          <div class="cell">Chain</div>
+          <div class="cell">Status</div>
+          <div class="cell">Movement</div>
+          <div class="cell cell-num">Amount</div>
+        </div>
+        <div id="walletRows"></div>
+        <div class="wallet-empty" id="walletEmpty" hidden>
+          <hexa-illustration name="EmptyBox"></hexa-illustration>
+          <strong>No movements in this view</strong>
+          <span class="text-body-sm text-fg-neutral-tertiary">Try a different filter.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SCREEN 6 — Confirmation stub
+         ============================================================ -->
+    <section id="order-confirmation" data-screen hidden>
+      <div class="confirmation">
+        <hexa-illustration name="EmptyBox"></hexa-illustration>
+        <h2 id="confirmationTitle">3 of 3 orders placed!</h2>
+        <p class="text-body-md text-fg-neutral-secondary">Your sellers have been notified. You can track delivery from Order history.</p>
+        <div class="confirmation-actions">
+          <button class="hexa-btn hexa-btn--primary" data-track="cta-confirmation-drafts" onclick="location.hash='#drafts'">Go to drafts</button>
+          <button class="hexa-btn hexa-btn--secondary" data-track="cta-confirmation-new" onclick="location.hash='#po-upload'">Start a new order</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         MODAL — Save as draft (name your cart)
+         Triggered from the cart's "Save as draft" sales-rep CTA.
+         ============================================================ -->
+    <dialog id="saveDraftModal" class="hexa-dialog save-draft-modal" aria-labelledby="saveDraftTitle">
+      <form method="dialog" onsubmit="event.preventDefault(); confirmSaveAsDraft();" class="save-draft-form">
+        <div class="hexa-dialog-header">
+          <h2 id="saveDraftTitle" class="save-draft-title">Save as draft</h2>
+        </div>
+        <div class="hexa-dialog-body">
+          <p class="save-draft-desc">
+            This cart will be saved as a draft so you can edit prices.
+            Name this cart for easy access later.
+          </p>
+          <label class="save-draft-label" for="saveDraftName">
+            Cart name <span class="save-draft-required" aria-hidden="true">*</span>
+          </label>
+          <div class="hexa-input-wrap" id="saveDraftNameWrap">
+            <input
+              id="saveDraftName"
+              class="hexa-input"
+              type="text"
+              maxlength="80"
+              required
+              aria-required="true"
+              aria-describedby="saveDraftNameError"
+              placeholder="E.g.: South-zone stores order — Jan/2026"
+              autocomplete="off"
+              data-track="modal-save-draft-name"
+              oninput="onSaveDraftNameInput()"
+            />
+          </div>
+          <p id="saveDraftNameError" class="save-draft-error" hidden>
+            Add a name before continuing.
+          </p>
+        </div>
+        <div class="hexa-dialog-footer save-draft-footer">
+          <button type="button" class="hexa-btn hexa-btn--secondary" data-track="cta-save-draft-cancel" onclick="cancelSaveAsDraft()">
+            Cancel
+          </button>
+          <button type="submit" id="saveDraftContinue" class="hexa-btn hexa-btn--primary" data-track="cta-save-draft-continue" disabled>
+            Continue
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- ================================================================
+         MODAL — Apply discounts via spreadsheet
+         ============================================================ -->
+    <dialog id="spreadsheetModal" class="hexa-dialog spreadsheet-modal" aria-labelledby="spreadsheetModalTitle">
+      <form method="dialog" class="spreadsheet-modal-form" onsubmit="event.preventDefault(); closeSpreadsheetModal();">
+        <div class="hexa-dialog-header">
+          <h2 id="spreadsheetModalTitle" class="spreadsheet-modal-title">Apply discounts via spreadsheet</h2>
+          <button type="button" class="hexa-dialog-close" aria-label="Close" onclick="closeSpreadsheetModal()">
+            <hexa-icon name="CloseIcon"></hexa-icon>
+          </button>
+        </div>
+        <div class="hexa-dialog-body">
+          <p class="spreadsheet-modal-desc">
+            Download the product table, fill in flex prices and new prices per store, then upload the file to apply changes to this draft.
+          </p>
+          <button type="button" class="hexa-btn hexa-btn--secondary" data-track="cta-draft-spreadsheet-download" onclick="downloadSpreadsheetTemplate()">
+            <hexa-icon name="DownloadIcon"></hexa-icon>
+            Download product table
+          </button>
+          <label class="dropzone spreadsheet-dropzone" data-track="cta-draft-spreadsheet-upload">
+            <input type="file" hidden accept=".xls,.xlsx,.csv" onchange="onSpreadsheetFileChosen(this)" />
+            <hexa-icon name="UploadIcon"></hexa-icon>
+            <div class="dropzone-text">
+              <strong>Drag your file here or <span class="dropzone-browse">Browse</span></strong>
+              <span class="text-body-sm text-fg-neutral-tertiary">XLS, XLSX, or CSV. Maximum size 20MB.</span>
+            </div>
+          </label>
+          <p id="spreadsheetFileName" class="spreadsheet-file-name" hidden></p>
+        </div>
+        <div class="hexa-dialog-footer spreadsheet-modal-footer">
+          <button type="button" class="hexa-btn hexa-btn--secondary" data-track="cta-draft-spreadsheet-cancel" onclick="closeSpreadsheetModal()">
+            Cancel
+          </button>
+          <button type="submit" class="hexa-btn hexa-btn--primary" data-track="cta-draft-spreadsheet-apply">
+            Apply file
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+  </main>
+
+  <!-- ================================================================
+       BEES Footer
+       ================================================================ -->
+  <footer class="bees-footer">
+    <div class="bees-footer-cols">
+      <div>
+        <h4>About BEES</h4>
+        <a href="#" data-track="footer-learn">Learn about us</a>
+        <a href="#" data-track="footer-privacy">Privacy policy</a>
+        <a href="#" data-track="footer-terms">Terms and conditions</a>
+      </div>
+      <div>
+        <h4>Need help?</h4>
+        <a href="#" data-track="footer-faq">Frequent questions</a>
+        <a href="#" data-track="footer-contact">Contact us</a>
+        <span class="bees-footer-static">Email: bees@za.ab-inbev.com</span>
+        <span class="bees-footer-static">Tel: +27 860 000722</span>
+      </div>
+      <div>
+        <h4>Schedule</h4>
+        <span class="bees-footer-static">Monday to Friday: 7am – 5pm</span>
+        <span class="bees-footer-static">Weekends &amp; Public Holidays: 8am – 2pm</span>
+      </div>
+    </div>
+    <div class="bees-footer-brand">
+      <img class="bees-footer-logo" src="../_shared/bees-logo.png" alt="BEES" />
+      <p class="bees-footer-copy">© AB InBev 2026. All rights reserved.<br/>Please enjoy responsibly.</p>
+      <a href="#" class="bees-footer-cookie" data-track="footer-cookies">Cookie settings</a>
+    </div>
+  </footer>
+
+  <!-- ================================================================
+       Dev role toggle — pinned bottom-right. Persists in localStorage.
+       Used to demo the visibility-by-role logic. Excluded from primary
+       metrics in HYPOTHESIS.md.
+       ================================================================ -->
+  <div class="dev-role-toggle">
+    <span class="dev-role-label">Demo role</span>
+    <button class="hexa-btn hexa-btn--secondary hexa-btn--sm"
+            id="roleToggleBtn"
+            data-track="cta-cart-role-toggle"
+            onclick="toggleRole()">
+      <hexa-icon name="UserIcon"></hexa-icon>
+      <span id="roleToggleLabel">Sales rep</span>
+    </button>
+  </div>
+
+  <!-- ================================================================
+       APP SCRIPT
+       ================================================================ -->
+  <script>
+  // ============================================================
+  // STATE
+  // ============================================================
+  const D = window.FLEX_DATA;
+
+  /** Build product table rows from catalogue data. Truck/cart drafts start with qty only. */
+  function buildDraftRows({ prefillPricing = true } = {}) {
+    const rows = D.DRAFT_PRODUCTS.map(p => ({
+      ...p,
+      stores: p.stores.map(s => {
+        const base = { ...s, qtyInput: String(s.qty), selected: false };
+        if (prefillPricing) {
+          return {
+            ...base,
+            flexSigned: -Math.abs(s.flexPct),
+            flexInput: '-' + s.flexPct,
+            newPriceInput: s.newPrice.toFixed(2),
+          };
+        }
+        return {
+          ...base,
+          flexPct: 0,
+          flexSigned: 0,
+          flexValue: 0,
+          flexInput: '',
+          newPrice: p.currentPrice,
+          newPriceInput: '',
+          flexError: false,
+        };
+      }),
+      expanded: false,
+      flexError: false,
+      selected: false,
+    }));
+    rows.forEach(p => {
+      const flexPcts = p.stores.map(s => {
+        const t = String(s.flexInput).trim();
+        if (!t) return 0;
+        return (t.startsWith('-') ? -1 : 1) * Math.abs(s.flexPct);
+      });
+      const newPrices = p.stores.map(s => s.newPrice);
+      p.qty = p.stores.reduce((sum, s) => sum + s.qty, 0);
+      p.total = p.stores.reduce((sum, s) => sum + s.qty * s.newPrice, 0);
+      p.flexRange = { min: Math.min(...flexPcts), max: Math.max(...flexPcts) };
+      p.newPriceRange = { min: Math.min(...newPrices), max: Math.max(...newPrices) };
+      p.hasVariation = p.flexRange.min !== p.flexRange.max
+        || p.newPriceRange.min !== p.newPriceRange.max;
+    });
+    return rows;
+  }
+
+  /** App state — every interaction mutates this and re-renders. */
+  const state = {
+    role: localStorage.getItem('flex_userRole') || 'sales-rep',  // 'sales-rep' | 'retailer'
+    flexUnit: 'pct',                  // legacy — only 'pct' is used now
+    grouping: 'products',             // legacy
+    rows: buildDraftRows({ prefillPricing: true }),
+    selectedCount: 0,
+    /** Draft lifecycle for Screen 3 → 4:
+     *    'DRAFT'    → editable, Send for approval
+     *    'PENDING'  → after click → 3s sim → APPROVED
+     *    'APPROVED' → locked, Place order, banner */
+    draftStatus: 'DRAFT',
+    /** User-given name for the current draft, captured by the
+     *  Save-as-draft modal triggered from the cart. Empty string means
+     *  the user opted not to name it (still allowed). */
+    draftName: '',
+    /** Payment method id committed for the current draft.
+     *    null   → first time on the draft; show the payment-method
+     *             picker step before any products are revealed.
+     *    string → method id from D.PAYMENT_METHODS; show the products. */
+    paymentMethod: null,
+    /** Tentative pick inside the payment step. */
+    paymentPick: null,
+    /** Table has unsaved edits (tracking only). */
+    editsDirty: false,
+    firstRowEditFired: false,         // for cta-flex-row-edit (once per session)
+    bulkApplied: 0,
+    /** How the user arrived at the cart — drives whether flex-pricing
+     *  results (tags + applied totals) are visible on cart.
+     *    'po'    → PO upload flow: no flex info yet, user can Save as draft.
+     *    'draft' → from an approved draft sent to truck: show flex applied. */
+    cartSource: 'po',
+    /** 'truck' = saved from cart (flex/new price empty until rep fills in).
+     *  'existing' = opened from drafts hub / wallet (catalogue flex prefilled). */
+    draftEntrySource: 'existing',
+  };
+
+  // ============================================================
+  // ROLE TOGGLE
+  // ============================================================
+  function applyRoleVisibility() {
+    const isSr = state.role === 'sales-rep';
+    document.body.classList.toggle('is-sales-rep', isSr);
+    document.body.classList.toggle('is-retailer', !isSr);
+    document.getElementById('roleToggleLabel').textContent = isSr ? 'Sales rep' : 'Retailer';
+  }
+  function toggleRole() {
+    state.role = state.role === 'sales-rep' ? 'retailer' : 'sales-rep';
+    localStorage.setItem('flex_userRole', state.role);
+    applyRoleVisibility();
+    HT.track('role_toggled', { role: state.role });
+    // Re-render cart so the Save-as-draft button appears/disappears live
+    renderCart();
+  }
+  applyRoleVisibility();
+
+  // ============================================================
+  // BEES TOPBAR NAV DROPDOWN
+  // ============================================================
+  function toggleNav(id, ev) {
+    if (ev) ev.preventDefault();
+    document.querySelectorAll('.bees-nav-dropdown.is-open').forEach(d => {
+      if (d.id !== id) d.classList.remove('is-open');
+    });
+    const dd = document.getElementById(id);
+    dd.classList.toggle('is-open');
+    const btn = dd.querySelector('.bees-nav-link');
+    btn.setAttribute('aria-expanded', dd.classList.contains('is-open'));
+    if (ev) ev.stopPropagation();
+  }
+  function closeNav() {
+    document.querySelectorAll('.bees-nav-dropdown.is-open').forEach(d => {
+      d.classList.remove('is-open');
+      d.querySelector('.bees-nav-link')?.setAttribute('aria-expanded', 'false');
+    });
+  }
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.bees-nav-dropdown')) closeNav();
+    if (!e.target.closest('.drafts-action-menu') && !e.target.closest('.row-action-menu-btn')) closeDraftsMenu();
+  });
+
+  // ============================================================
+  // FORMATTING HELPERS
+  // ============================================================
+  const fmt = (n) => '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fmtNeg = (n) => '-$' + Math.abs(Number(n)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  // ============================================================
+  // SCREEN 1 — PO Upload → fast-forward to Cart
+  //   The wizard's middle steps (file analysis / product review /
+  //   preferred sellers / catalog review) were intentionally waived
+  //   for this prototype — the hypothesis is downstream of them.
+  // ============================================================
+  function continueFromPo() {
+    HT.track('po_continue_shortcut', { steps_skipped: 4 });
+    state.cartSource = 'po';
+    location.hash = '#cart';
+  }
+
+  // ============================================================
+  // SCREEN 2 — Cart
+  // ============================================================
+  /** Flex label for truck lines — mirrors order-draft adj cell wording. */
+  function describeProductFlexPricing(p) {
+    if (!p?.stores?.length) return null;
+    const flexPcts = p.stores.map(signedFlexPct);
+    const active = flexPcts.filter(x => x !== 0);
+    if (!active.length) return null;
+
+    const min = Math.min(...active);
+    const max = Math.max(...active);
+    const hasDiscount = active.some(x => x < 0);
+    const hasIncrease = active.some(x => x > 0);
+    const fmtDisc = (n) => `- ${formatPct(Math.abs(n))}%`;
+    const fmtInc = (n) => `+ ${formatPct(n)}%`;
+
+    let tone = 'discount';
+    let pctText;
+    if (min === max) {
+      if (min < 0) {
+        tone = 'discount';
+        pctText = `${fmtDisc(min)} discount`;
+      } else {
+        tone = 'increase';
+        pctText = `${fmtInc(min)} increase`;
+      }
+    } else if (hasDiscount && !hasIncrease) {
+      tone = 'discount';
+      pctText = `${fmtDisc(min)} to ${fmtDisc(max)} discount`;
+    } else if (hasIncrease && !hasDiscount) {
+      tone = 'increase';
+      pctText = `${fmtInc(min)} to ${fmtInc(max)} increase`;
+    } else {
+      tone = 'mixed';
+      pctText = `${fmtSignedPct(min)} to ${fmtSignedPct(max)}`;
+    }
+    return { pctText, tone };
+  }
+
+  /** True when the current draft has at least one non-zero flex adjustment. */
+  function draftHasFlexPricing() {
+    return state.rows.some(p => p.stores?.some(s => {
+      const pct = signedFlexPct(s);
+      return pct !== 0 && Number.isFinite(pct);
+    }));
+  }
+
+  function buildCartProductsFromDraft() {
+    const hues = ['amber', 'amber', 'red', 'info'];
+    return state.rows.slice(0, 4).map((p, idx) => {
+      recomputeProduct(p);
+      const flex = describeProductFlexPricing(p);
+      const totalQty = p.qty || 1;
+      const lineTotal = p.total;
+      const unitPrice = +(lineTotal / totalQty).toFixed(2);
+      return {
+        name: p.name,
+        uom: p.soldBy,
+        qty: p.qty,
+        unitPrice,
+        listPrice: p.currentPrice,
+        lineTotal,
+        flex,
+        emoji: p.emoji,
+        hue: hues[idx % hues.length],
+        fromDraft: true,
+      };
+    });
+  }
+
+  function renderCartFlexTag(flex) {
+    if (!flex) return '';
+    const tagTone = flex.tone === 'increase'
+      ? 'hexa-tag--warning'
+      : flex.tone === 'mixed'
+        ? 'hexa-tag--brand'
+        : 'hexa-tag--success';
+    return `<span class="hexa-tag ${tagTone} cart-flex-tag"><hexa-icon name="CheckIcon"></hexa-icon> Flex pricing</span>`;
+  }
+
+  function renderCartFlexPct(flex) {
+    if (!flex) return '';
+    const cls = flex.tone === 'increase'
+      ? 'line-applied line-applied--increase'
+      : flex.tone === 'mixed'
+        ? 'line-applied line-applied--mixed'
+        : 'line-applied';
+    return `<div class="${cls}"><hexa-icon name="CheckIcon"></hexa-icon> ${flex.pctText}</div>`;
+  }
+
+  function renderCartFlexSummary(sums) {
+    if (!sums) return '';
+    const blocks = [];
+    if (sums.totalDiscountAmt > 0) {
+      blocks.push(`
+        <div class="store-card-discount-applied store-card-discount-applied--discount">
+          <hexa-icon name="CheckIcon"></hexa-icon>
+          Discounts — <strong>${fmtNeg(sums.totalDiscountAmt)}</strong>
+          <span class="store-card-flex-pct">- ${sums.discountPct}%</span>
+        </div>
+      `);
+    }
+    if (sums.totalIncreaseAmt > 0) {
+      blocks.push(`
+        <div class="store-card-discount-applied store-card-discount-applied--increase">
+          <hexa-icon name="CheckIcon"></hexa-icon>
+          Price increases — <strong>+ ${fmt(sums.totalIncreaseAmt)}</strong>
+          <span class="store-card-flex-pct">+ ${sums.increasePct}%</span>
+        </div>
+      `);
+    }
+    return blocks.join('');
+  }
+
+  function renderCart() {
+    const c = D.CART;
+    const stores = document.getElementById('cartStores');
+    const exp = c.expandedSeller;
+    const showFlex = state.cartSource === 'draft' && draftHasFlexPricing();
+    const draftSums = showFlex ? computeOrderSummary() : null;
+    const cartProducts = showFlex ? buildCartProductsFromDraft() : exp.products;
+
+    // Expanded seller card
+    const productRows = cartProducts.map(p => {
+      const flex = showFlex ? (p.flex || null) : null;
+      const thumb = p.fromDraft
+        ? `<div class="cart-product-thumb cart-product-thumb--emoji" aria-hidden="true">${p.emoji}</div>`
+        : `<div class="cart-product-thumb thumb-${p.img.hue}" aria-hidden="true">${p.img.initials}</div>`;
+      const showListStrike = showFlex && flex;
+      return `
+      <div class="cart-product">
+        ${thumb}
+        <div class="cart-product-body">
+          <div class="cart-product-name">${p.name}</div>
+          <div class="cart-product-uom text-body-xs text-fg-neutral-tertiary">${p.uom}</div>
+          ${flex ? renderCartFlexTag(flex) : ''}
+        </div>
+        <div class="cart-product-pricing">
+          <div class="line-was">${showListStrike ? fmt(p.listPrice) + ' list' : fmt(p.listPrice || p.unitPrice)}</div>
+          ${flex ? renderCartFlexPct(flex) : ''}
+          <div class="line-unit">${fmt(p.unitPrice)}</div>
+        </div>
+        <div class="cart-product-qty">
+          <button class="qty-btn" aria-label="Decrease" data-track="cart-qty-down">−</button>
+          <input class="qty-input" value="${p.qty}" aria-label="Quantity" />
+          <button class="qty-btn" aria-label="Increase" data-track="cart-qty-up">+</button>
+          <div class="line-total">${fmt(p.lineTotal)}</div>
+          <button class="qty-remove" aria-label="Remove" data-track="cart-row-remove"><hexa-icon name="CloseIcon"></hexa-icon></button>
+        </div>
+      </div>
+    `;
+    }).join('');
+
+    const expandedHTML = `
+      <article class="store-card store-card--expanded">
+        <header class="store-card-head">
+          <div class="store-card-title">
+            <span class="seller-avatar" aria-hidden="true">DA</span>
+            <span class="store-name">${exp.name}</span>
+          </div>
+          <button class="store-card-toggle" aria-expanded="true" aria-label="Collapse" data-track="cart-store-collapse">
+            <hexa-icon name="ChevronUpIcon"></hexa-icon>
+          </button>
+        </header>
+        <div class="store-card-body">
+          <div class="store-card-row">
+            <div>
+              <div class="store-name">${exp.storeName}</div>
+              <div class="text-body-xs text-fg-neutral-tertiary">${exp.cnpj}</div>
+            </div>
+            <div class="store-card-totals">
+              <span class="text-body-xs text-fg-neutral-tertiary">Store total</span>
+              <strong>${fmt(exp.summary.storeTotal)}</strong>
+            </div>
+          </div>
+          <div class="store-card-meta">
+            <span class="meta-pill">${showFlex ? state.rows.length : exp.summary.products} products</span>
+            <span class="meta-pill">${exp.summary.pallets}</span>
+          </div>
+          ${showFlex && draftSums ? `
+            <div class="store-card-discount">
+              <span class="text-body-sm">Flex pricing from order draft</span>
+            </div>
+            ${renderCartFlexSummary(draftSums)}
+          ` : ''}
+          <div class="cart-products">${productRows}</div>
+        </div>
+      </article>
+    `;
+
+    // Collapsed store cards
+    const collapsedHTML = c.collapsedStores.map(s => `
+      <article class="store-card store-card--collapsed">
+        <div class="store-card-collapsed-row">
+          <div class="store-card-collapsed-id">
+            <div class="store-name">${s.storeName} <span class="store-card-bookmark"><hexa-icon name="BookmarkIcon"></hexa-icon></span></div>
+            <div class="text-body-xs text-fg-neutral-tertiary">${s.cnpj}</div>
+          </div>
+          ${s.chip ? `<span class="status-pill is-${s.chip.type}">${s.chip.label}</span>` : ''}
+          ${s.productsCount ? `
+            <div class="store-card-collapsed-meta">
+              <span>${s.productsCount} products</span>
+              <span>${s.pallets}</span>
+            </div>` : ''}
+          <div class="store-card-collapsed-total">
+            <span class="text-body-xs text-fg-neutral-tertiary">Store total</span>
+            <strong>${fmt(s.storeTotal)}</strong>
+          </div>
+          <button class="store-card-toggle" aria-expanded="false" aria-label="Expand" data-track="cart-store-expand">
+            <hexa-icon name="ChevronDownIcon"></hexa-icon>
+          </button>
+        </div>
+        ${s.minimumNotice ? `
+          <div class="minimum-notice">
+            <span>Meet the minimum required for check out</span>
+            <div class="minimum-progress">
+              <div class="minimum-progress-fill" style="width:${s.minimumNotice.progress}%"></div>
+            </div>
+            <span class="minimum-amount">${fmt(s.minimumNotice.amount)}</span>
+          </div>` : ''}
+      </article>
+    `).join('');
+
+    stores.innerHTML = expandedHTML + collapsedHTML;
+
+    // Order summary side card
+    const sum = c.orderSummary;
+    document.getElementById('cartSummary').innerHTML = `
+      <h3 class="summary-title">Order summary</h3>
+      <p class="summary-sub text-body-sm text-fg-neutral-secondary">Make sure to check out with each seller.</p>
+
+      <div class="summary-card">
+        <div class="summary-card-head">
+          <span class="summary-seller">${sum.sellerLabel}</span>
+          <span class="hexa-tag hexa-tag--brand">Cart</span>
+        </div>
+        <div class="summary-row">
+          <span class="text-body-sm">${sum.subtotalLabel}</span>
+        </div>
+        <div class="summary-row">
+          <span class="text-body-sm text-fg-neutral-secondary">${sum.pallets}</span>
+        </div>
+        <hr class="hexa-divider" />
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <strong>${fmt(sum.subtotal)}</strong>
+        </div>
+        <div class="summary-row text-body-xs text-fg-neutral-tertiary">
+          (Fees ${fmt(sum.fees)}, Taxes ${fmt(sum.taxes)})
+        </div>
+        <div class="summary-row">
+          <span>Delivery fee <hexa-icon name="InfoIcon"></hexa-icon></span>
+          <strong class="text-status-success">Free</strong>
+        </div>
+        <hr class="hexa-divider" />
+        <div class="summary-row summary-row--big">
+          <span>Estimated total</span>
+          <strong>${fmt(sum.estimatedTotal)}</strong>
+        </div>
+        <div class="summary-savings">You are saving ${fmt(sum.youAreSaving)}</div>
+
+        <button class="hexa-btn hexa-btn--primary hexa-btn--md w-full mt-md" data-track="cta-cart-continue" onclick="continueWithSeller()">
+          Continue with this seller
+        </button>
+
+        <!-- Sales-rep-only: Save as draft + flex balance ----------- -->
+        <div class="sr-only-block">
+          <div class="flex-balance-row">
+            <span class="text-body-xs text-fg-neutral-tertiary">Flex balance</span>
+            <strong>${fmt(D.CART.flexBalance)}</strong>
+          </div>
+          <a href="#wallet" class="wallet-link" data-track="cta-wallet-open" data-source="cart">
+            View movements <hexa-icon name="ArrowRightIcon"></hexa-icon>
+          </a>
+          <button class="hexa-btn hexa-btn--secondary hexa-btn--md w-full" data-track="cta-cart-save-draft" onclick="saveAsDraft()">
+            <hexa-icon name="EditIcon"></hexa-icon>
+            Save as draft
+          </button>
+          <p class="text-body-xs text-fg-neutral-tertiary mt-2xs" style="text-align:center;margin:0;">
+            Adjusts flex prices before sending the order for approval.
+          </p>
+        </div>
+      </div>
+    `;
+  }
+
+  function continueWithSeller() {
+    HT.track('cart_continue_seller', {
+      seller: 'Distributor Alpha',
+      source: state.cartSource,
+    });
+    // From an approved draft, the cart is the final review step before
+    // checkout, so route to the confirmation screen. From PO upload the
+    // primary path is Save as draft, so we stay on cart.
+    if (state.cartSource === 'draft') {
+      location.hash = '#order-confirmation';
+    }
+  }
+
+  function saveAsDraft() {
+    // Sales rep first names the draft, then continues into the order-draft
+    // editor. The name is required so drafts stay findable in the hub.
+    HT.track('save_draft_modal_opened', { cart_id: 'mock-cart-001' });
+    const dlg = document.getElementById('saveDraftModal');
+    const input = document.getElementById('saveDraftName');
+    if (input) input.value = state.draftName || '';
+    // Reset validation state every time the modal opens.
+    document.getElementById('saveDraftNameWrap')?.classList.remove('is-error');
+    document.getElementById('saveDraftNameError')?.setAttribute('hidden', '');
+    syncSaveDraftContinueState();
+    if (dlg) {
+      if (typeof dlg.showModal === 'function') {
+        dlg.showModal();
+      } else {
+        dlg.setAttribute('open', '');
+      }
+      // Defer focus to ensure the dialog is in the DOM/showing.
+      setTimeout(() => input?.focus(), 0);
+    }
+  }
+
+  // Toggle the Continue button based on whether the field has a real value.
+  function syncSaveDraftContinueState() {
+    const input = document.getElementById('saveDraftName');
+    const btn = document.getElementById('saveDraftContinue');
+    if (!input || !btn) return;
+    btn.disabled = input.value.trim().length === 0;
+  }
+
+  // Clears the error treatment as soon as the user starts typing again,
+  // and keeps Continue enable/disable in sync with the field.
+  function onSaveDraftNameInput() {
+    const wrap = document.getElementById('saveDraftNameWrap');
+    const err = document.getElementById('saveDraftNameError');
+    const input = document.getElementById('saveDraftName');
+    if (wrap && input && input.value.trim().length > 0) {
+      wrap.classList.remove('is-error');
+      err?.setAttribute('hidden', '');
+    }
+    syncSaveDraftContinueState();
+  }
+
+  function cancelSaveAsDraft() {
+    HT.track('save_draft_modal_cancelled');
+    const dlg = document.getElementById('saveDraftModal');
+    if (dlg && typeof dlg.close === 'function') dlg.close();
+    else dlg?.removeAttribute('open');
+  }
+
+  function confirmSaveAsDraft() {
+    const input = document.getElementById('saveDraftName');
+    const name = (input?.value || '').trim();
+    // Name is mandatory — guard even if button gating is bypassed.
+    if (!name) {
+      document.getElementById('saveDraftNameWrap')?.classList.add('is-error');
+      document.getElementById('saveDraftNameError')?.removeAttribute('hidden');
+      input?.focus();
+      HT.track('save_draft_modal_validation_error', { reason: 'empty_name' });
+      return;
+    }
+    HT.track('draft_created_from_cart', {
+      cart_id: 'mock-cart-001',
+      name_length: name.length,
+    });
+    state.draftName = name;
+    state.draftStatus = 'DRAFT';
+    state.draftEntrySource = 'truck';
+    state.rows = buildDraftRows({ prefillPricing: false });
+    state.editsDirty = false;
+    resetBulkFlexInput();
+    // First time on this draft → payment method picker comes before products.
+    state.paymentMethod = null;
+    state.paymentPick = null;
+    const dlg = document.getElementById('saveDraftModal');
+    if (dlg && typeof dlg.close === 'function') dlg.close();
+    else dlg?.removeAttribute('open');
+    location.hash = '#order-draft';
+  }
+
+  // ============================================================
+  // SCREEN 3 / 4 — Order Draft
+  // ============================================================
+  // Legacy no-ops kept so any stale onclick="setFlexUnit('pct')" wiring
+  // in the DOM doesn't throw. The flex-unit and grouping segmented
+  // toolbars were removed when the per-store editing model landed.
+  function setFlexUnit() {}
+  function setGrouping() {}
+
+  function renderDraftHead() {
+    const ctx = D.DRAFT_CONTEXT;
+    document.getElementById('draftChainName').textContent = state.draftName || ctx.chainName;
+
+    const pill = document.getElementById('draftStatusPill');
+    if (state.draftStatus === 'DRAFT') {
+      pill.className = 'status-pill is-neutral';
+      pill.textContent = 'Draft';
+    } else if (state.draftStatus === 'PENDING') {
+      pill.className = 'status-pill is-warning';
+      pill.textContent = 'Pending review';
+    } else {
+      pill.className = 'status-pill is-success';
+      pill.textContent = 'Approved';
+    }
+
+    // Header meta row — changes shape between DRAFT and APPROVED.
+    // Hidden entirely while the payment-method picker is up: there is
+    // no committed method to label yet.
+    const meta = document.getElementById('draftMetaRow');
+    if (state.paymentMethod === null) {
+      meta.hidden = true;
+      meta.innerHTML = '';
+    } else if (state.draftStatus === 'APPROVED') {
+      meta.hidden = false;
+      meta.innerHTML = `
+        <div class="draft-meta-field">
+          <span class="meta-label">Payment method:</span>
+          <strong>${ctx.paymentMethod}</strong>
+          <button class="meta-edit" aria-label="Edit payment method" data-track="cta-draft-payment-edit" disabled><hexa-icon name="EditIcon"></hexa-icon></button>
+        </div>
+      `;
+    } else {
+      meta.hidden = false;
+      meta.innerHTML = `
+        <div class="draft-meta-field">
+          <span class="meta-label">Payment method:</span>
+          <strong>${ctx.paymentMethod}</strong>
+          <button class="meta-edit" aria-label="Edit payment method" data-track="cta-draft-payment-edit" onclick="reopenPaymentStep()"><hexa-icon name="EditIcon"></hexa-icon></button>
+        </div>
+      `;
+    }
+
+    // Approver banner — only visible in APPROVED
+    const banner = document.getElementById('draftApproverBanner');
+    if (state.draftStatus === 'APPROVED') {
+      banner.hidden = false;
+      banner.innerHTML = `
+        <div class="hexa-alert hexa-alert--success approver-banner">
+          <hexa-icon name="CheckIcon"></hexa-icon>
+          <div class="hexa-alert-body">
+            <strong>${ctx.approver.name}</strong> (${ctx.approver.email}) approved this draft.
+          </div>
+        </div>
+      `;
+    } else {
+      banner.hidden = true;
+      banner.innerHTML = '';
+    }
+  }
+
+  // ============================================================
+  // ORDER DRAFT — payment-method picker step
+  // First view a rep sees on a brand-new draft. Until a method is
+  // committed, the products + sidebar stay hidden: payment can shift
+  // product prices, so it must be picked first.
+  // ============================================================
+  function renderPaymentStep() {
+    showPaymentStep();
+    state.paymentPick = state.paymentPick ?? null;
+    const list = document.getElementById('paymentList');
+    list.innerHTML = D.PAYMENT_METHODS.map(m => `
+      <label class="payment-option ${state.paymentPick === m.id ? 'is-selected' : ''}" data-id="${m.id}">
+        <input type="radio" name="payment-method" value="${m.id}"
+               ${state.paymentPick === m.id ? 'checked' : ''}
+               onchange="selectPaymentMethod('${m.id}')"
+               data-track="cta-payment-method-pick" />
+        <span class="payment-option-label">${m.label}</span>
+      </label>
+    `).join('');
+    syncPaymentSaveBtn();
+    HT.track('payment_step_viewed');
+  }
+
+  function selectPaymentMethod(id) {
+    state.paymentPick = id;
+    document.querySelectorAll('#paymentList .payment-option').forEach(el => {
+      el.classList.toggle('is-selected', el.dataset.id === id);
+    });
+    syncPaymentSaveBtn();
+    HT.track('payment_method_selected', { method: id });
+  }
+
+  function syncPaymentSaveBtn() {
+    const locked = state.draftStatus === 'APPROVED' || state.draftStatus === 'PENDING';
+    const paymentStepEl = document.getElementById('paymentStep');
+    const onPaymentStep = state.paymentMethod === null
+      && paymentStepEl
+      && !paymentStepEl.hasAttribute('hidden');
+    const paymentBtn = document.getElementById('paymentSaveBtn');
+    if (!paymentBtn) return;
+    paymentBtn.hidden = !onPaymentStep;
+    paymentBtn.disabled = locked || !state.paymentPick;
+  }
+
+  function onPaymentSave() {
+    confirmPaymentMethod();
+  }
+
+  function confirmPaymentMethod() {
+    if (!state.paymentPick) return;
+    const picked = D.PAYMENT_METHODS.find(m => m.id === state.paymentPick);
+    state.paymentMethod = state.paymentPick;
+    if (picked) D.DRAFT_CONTEXT.paymentMethod = picked.label;
+    resetBulkFlexInput();
+    showDraftProducts();
+    renderDraftHead();
+    renderDraftTable();
+    renderSidebar();
+    updateBulkBar();
+  }
+
+  // Re-open the payment-method picker from the draft meta-row pencil.
+  // Pre-selects the currently-committed method so the rep sees their
+  // existing pick highlighted.
+  function reopenPaymentStep() {
+    state.paymentPick = state.paymentMethod;
+    state.paymentMethod = null;
+    renderDraftHead();
+    renderPaymentStep();
+  }
+
+  function showPaymentStep() {
+    document.getElementById('paymentStep')?.removeAttribute('hidden');
+    document.getElementById('draftLayout')?.setAttribute('hidden', '');
+    syncPaymentSaveBtn();
+  }
+
+  function showDraftProducts() {
+    document.getElementById('paymentStep')?.setAttribute('hidden', '');
+    document.getElementById('draftLayout')?.removeAttribute('hidden');
+    syncPaymentSaveBtn();
+  }
+
+  function openSpreadsheetModal() {
+    const dlg = document.getElementById('spreadsheetModal');
+    const nameEl = document.getElementById('spreadsheetFileName');
+    if (nameEl) { nameEl.hidden = true; nameEl.textContent = ''; }
+    if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
+    else dlg?.setAttribute('open', '');
+  }
+  function closeSpreadsheetModal() {
+    const dlg = document.getElementById('spreadsheetModal');
+    if (dlg && typeof dlg.close === 'function') dlg.close();
+    else dlg?.removeAttribute('open');
+  }
+  function downloadSpreadsheetTemplate() {
+    HT.track('draft_spreadsheet_download_clicked');
+  }
+  function onSpreadsheetFileChosen(input) {
+    const nameEl = document.getElementById('spreadsheetFileName');
+    if (!input.files?.length) return;
+    if (nameEl) {
+      nameEl.hidden = false;
+      nameEl.textContent = input.files[0].name;
+    }
+    markDirty();
+    HT.track('draft_spreadsheet_file_selected', { name: input.files[0].name });
+  }
+
+  function computeOrderSummary() {
+    let originalPrice = 0;
+    let totalDiscountAmt = 0;
+    let discountOriginal = 0;   // original $ only on lines with a discount
+    let totalIncreaseAmt = 0;
+    let increaseOriginal = 0;   // original $ only on lines with an increase
+    state.rows.forEach(p => {
+      p.stores.forEach(s => {
+        const lineOriginal = p.currentPrice * s.qty;
+        const lineNew = s.newPrice * s.qty;
+        originalPrice += lineOriginal;
+        const delta = lineNew - lineOriginal;
+        if (delta < 0) {
+          totalDiscountAmt += Math.abs(delta);
+          discountOriginal += lineOriginal;
+        } else if (delta > 0) {
+          totalIncreaseAmt += delta;
+          increaseOriginal += lineOriginal;
+        }
+      });
+    });
+    const finalPrice = originalPrice - totalDiscountAmt + totalIncreaseAmt;
+    const adjustments = totalDiscountAmt - totalIncreaseAmt;
+    return {
+      originalPrice,
+      totalDiscountAmt,
+      totalIncreaseAmt,
+      finalPrice,
+      adjustments,
+      // % is relative to affected lines only — not whole order (avoids +$X showing as 0%).
+      discountPct: discountOriginal
+        ? Math.round(totalDiscountAmt / discountOriginal * 100) : 0,
+      increasePct: increaseOriginal
+        ? Math.round(totalIncreaseAmt / increaseOriginal * 100) : 0,
+      adjustmentPct: originalPrice
+        ? Math.round(adjustments / originalPrice * 100) : 0,
+    };
+  }
+
+  // ============================================================
+  // PRODUCTS TABLE — header + rows + per-store expansion
+  //
+  // Layout (10 columns):
+  //   1  checkbox            56px
+  //   2  expand chevron      48px
+  //   3  product image       72px (emoji placeholder)
+  //   4  product name + EAN  flex
+  //   5  quantity (input)    96px
+  //   6  current price       108px
+  //   7  flex price (input)  120px
+  //   8  new price (input)   132px
+  //   9  total               112px
+  //  10  actions (trash)     64px
+  // ============================================================
+  const RANGE_SEP = ' to '; // English; switch to ' até ' for pt-BR
+  function fmtSignedPct(n) {
+    const mag = formatPct(Math.abs(n));
+    return n < 0 ? `-${mag}%` : `${mag}%`;
+  }
+  function fmtRangePct(min, max) {
+    if (min === max) return fmtSignedPct(min);
+    return `${fmtSignedPct(min)}${RANGE_SEP}${fmtSignedPct(max)}`;
+  }
+  function signedFlexPct(s) {
+    if (typeof s.flexSigned === 'number' && Number.isFinite(s.flexSigned)) {
+      return s.flexSigned;
+    }
+    const t = String(s.flexInput).trim();
+    const mag = Math.abs(s.flexPct);
+    return (t.startsWith('-') ? -1 : 1) * mag;
+  }
+  function fmtRangeMoney(min, max) {
+    if (min === max) return fmt(min);
+    return `${fmt(min)}${RANGE_SEP}${fmt(max)}`;
+  }
+  function formatPct(n) {
+    return Number.isInteger(n) ? String(n) : n.toFixed(1);
+  }
+
+  function uniformStoreValue(p, pick) {
+    if (!p.stores.length) return { uniform: true, value: '' };
+    const vals = p.stores.map(pick);
+    const uniform = vals.every(v => v === vals[0]);
+    return { uniform, value: uniform ? vals[0] : '' };
+  }
+
+  // Recomputes the parent product row's aggregated qty / total / ranges
+  // from its store children. Called after any per-store input edit.
+  function recomputeProduct(p) {
+    const flexPcts = p.stores.map(signedFlexPct);
+    const newPrices = p.stores.map(s => s.newPrice);
+    p.qty = p.stores.reduce((sum, s) => sum + s.qty, 0);
+    p.total = p.stores.reduce((sum, s) => sum + s.qty * s.newPrice, 0);
+    p.flexRange = { min: Math.min(...flexPcts), max: Math.max(...flexPcts) };
+    p.newPriceRange = { min: Math.min(...newPrices), max: Math.max(...newPrices) };
+    p.hasVariation = p.flexRange.min !== p.flexRange.max
+      || p.newPriceRange.min !== p.newPriceRange.max;
+  }
+
+  function renderDraftTable() {
+    const wrap = document.getElementById('draftTable');
+    const locked = state.draftStatus === 'APPROVED' || state.draftStatus === 'PENDING';
+
+    const headerHtml = `
+      <div class="draft-row draft-row--head" role="row">
+        <div class="cell cell-check" role="columnheader">
+          <label class="hexa-check">
+            <input type="checkbox" id="checkAll" onchange="toggleAll(this.checked)" aria-label="Select all rows" />
+          </label>
+        </div>
+        <div class="cell cell-expand" role="columnheader" aria-hidden="true"></div>
+        <div class="cell cell-thumb" role="columnheader" aria-hidden="true"></div>
+        <div class="cell cell-product" role="columnheader">Product</div>
+        <div class="cell cell-qty" role="columnheader">Quantity</div>
+        <div class="cell cell-current" role="columnheader">Current price</div>
+        <div class="cell cell-flex" role="columnheader">Flex price (%)</div>
+        <div class="cell cell-newprice" role="columnheader">New price</div>
+        <div class="cell cell-total" role="columnheader">Total</div>
+        <div class="cell cell-actions" role="columnheader">Actions</div>
+      </div>
+    `;
+
+    const bodyHtml = state.rows.map((p, idx) => {
+      const disabled = p.outOfStock || locked;
+      const expanded = !!p.expanded;
+      const rowSelected = !!p.selected;
+      const flexLabel = fmtRangePct(p.flexRange.min, p.flexRange.max);
+      const newPriceLabel = fmtRangeMoney(p.newPriceRange.min, p.newPriceRange.max);
+      const minMaxCaption = `Min -${formatPct(p.minPct)}% max ${formatPct(p.maxPct)}%`;
+      const pErrorClass = p.stores.some(s => s.flexError) ? 'is-error' : '';
+      const flexUniform = uniformStoreValue(p, s => s.flexInput);
+      const newUniform = uniformStoreValue(p, s => s.newPriceInput);
+      const qtyUniform = uniformStoreValue(p, s => String(s.qty));
+
+      // Parent product row — editable; changes apply to all stores for this product.
+      const parent = `
+        <div class="draft-row draft-row--product ${idx % 2 === 1 ? 'is-odd' : ''} ${expanded ? 'is-expanded' : ''} ${rowSelected ? 'is-selected' : ''} ${p.outOfStock ? 'is-out-of-stock' : ''}"
+             data-id="${p.id}" role="row">
+          <div class="cell cell-check">
+            <label class="hexa-check">
+              <input type="checkbox" ${rowSelected ? 'checked' : ''}
+                     ${disabled ? 'disabled' : ''}
+                     onchange="toggleRowSelected('${p.id}', this.checked)"
+                     aria-label="Select ${p.name}" />
+            </label>
+          </div>
+          <div class="cell cell-expand">
+            <button type="button" class="row-expand-btn" aria-expanded="${expanded}" aria-label="${expanded ? 'Collapse' : 'Expand'} stores"
+                    onclick="toggleExpand('${p.id}')">
+              <hexa-icon name="${expanded ? 'ChevronUpIcon' : 'ChevronDownIcon'}"></hexa-icon>
+            </button>
+          </div>
+          <div class="cell cell-thumb">
+            <span class="prod-thumb" aria-hidden="true">${p.emoji}</span>
+          </div>
+          <div class="cell cell-product">
+            <div class="prod-text">
+              <div class="prod-name">${p.name}</div>
+              <div class="prod-meta">EAN ${p.ean}</div>
+              ${p.outOfStock ? '<span class="hexa-tag hexa-tag--error">Out of stock</span>' : ''}
+            </div>
+          </div>
+          <div class="cell cell-qty">
+            <span class="hexa-input-wrap">
+              <input class="hexa-input product-qty-input" type="text" inputmode="numeric"
+                     value="${qtyUniform.value}"
+                     placeholder="${qtyUniform.uniform ? '' : String(p.qty)}"
+                     ${disabled ? 'disabled' : ''}
+                     data-track="cta-product-qty-edit"
+                     oninput="editProductQty('${p.id}', this.value)" />
+            </span>
+          </div>
+          <div class="cell cell-current"><span class="cell-readonly">${fmt(p.currentPrice)}</span></div>
+          <div class="cell cell-flex">
+            <span class="hexa-input-wrap ${pErrorClass}">
+              <input class="hexa-input product-flex-input" type="text" inputmode="decimal"
+                     value="${flexUniform.value}"
+                     placeholder="${flexUniform.uniform ? '' : flexLabel}"
+                     ${disabled ? 'disabled' : ''}
+                     data-track="cta-product-flex-edit"
+                     oninput="editProductFlex('${p.id}', this.value)" />
+              <span class="hexa-input-suffix">%</span>
+            </span>
+            <div class="cell-caption ${pErrorClass}">${minMaxCaption}</div>
+          </div>
+          <div class="cell cell-newprice">
+            <span class="hexa-input-wrap">
+              <span class="hexa-input-prefix">$</span>
+              <input class="hexa-input product-newprice-input" type="text" inputmode="decimal"
+                     value="${newUniform.value}"
+                     placeholder="${newUniform.uniform ? '' : newPriceLabel}"
+                     ${disabled ? 'disabled' : ''}
+                     data-track="cta-product-newprice-edit"
+                     oninput="editProductNewPrice('${p.id}', this.value)" />
+            </span>
+          </div>
+          <div class="cell cell-total"><span class="cell-total-val">${fmt(p.total)}</span></div>
+          <div class="cell cell-actions">
+            <button class="row-action" aria-label="Remove product"
+                    ${disabled ? 'disabled' : ''}
+                    data-track="cta-flex-row-delete"
+                    onclick="deleteRow('${p.id}')">
+              <hexa-icon name="TrashIcon"></hexa-icon>
+            </button>
+          </div>
+        </div>
+      `;
+
+      // Per-store children — only rendered when the product is expanded.
+      const childrenHtml = expanded ? p.stores.map(s => {
+        const sErrorClass = s.flexError ? 'is-error' : '';
+        const storeSelected = !!s.selected;
+        const storeRowSelected = storeSelected || rowSelected;
+        return `
+          <div class="draft-row draft-row--store ${storeRowSelected ? 'is-selected' : ''}" data-product-id="${p.id}" data-store-id="${s.id}" role="row">
+            <div class="cell cell-check">
+              <label class="hexa-check">
+                <input type="checkbox" ${storeSelected ? 'checked' : ''}
+                       ${disabled ? 'disabled' : ''}
+                       onchange="toggleStoreSelected('${p.id}', '${s.id}', this.checked)"
+                       aria-label="Select ${s.storeName}" />
+              </label>
+            </div>
+            <div class="cell cell-expand"></div>
+            <div class="cell cell-thumb"></div>
+            <div class="cell cell-product">
+              <div class="prod-text">
+                <div class="store-name">${s.storeName}</div>
+                ${s.cnpj ? `<div class="store-cnpj">${s.cnpj}</div>` : ''}
+              </div>
+            </div>
+            <div class="cell cell-qty">
+              <span class="hexa-input-wrap">
+                <input class="hexa-input store-qty-input" type="text" inputmode="numeric"
+                       value="${s.qtyInput}"
+                       ${disabled ? 'disabled' : ''}
+                       data-track="cta-store-qty-edit"
+                       oninput="editStoreQty('${p.id}', '${s.id}', this.value)" />
+              </span>
+            </div>
+            <div class="cell cell-current"><span class="cell-readonly">${fmt(p.currentPrice)}</span></div>
+            <div class="cell cell-flex">
+              <span class="hexa-input-wrap ${sErrorClass}">
+                <input class="hexa-input store-flex-input" type="text" inputmode="decimal"
+                       value="${s.flexInput}"
+                       ${disabled ? 'disabled' : ''}
+                       data-track="cta-store-flex-edit"
+                       oninput="editStoreFlex('${p.id}', '${s.id}', this.value)" />
+                <span class="hexa-input-suffix">%</span>
+              </span>
+              <div class="cell-caption ${sErrorClass}">${minMaxCaption}</div>
+            </div>
+            <div class="cell cell-newprice">
+              <span class="hexa-input-wrap">
+                <span class="hexa-input-prefix">$</span>
+                <input class="hexa-input store-newprice-input" type="text" inputmode="decimal"
+                       value="${s.newPriceInput}"
+                       ${disabled ? 'disabled' : ''}
+                       data-track="cta-store-newprice-edit"
+                       oninput="editStoreNewPrice('${p.id}', '${s.id}', this.value)" />
+              </span>
+            </div>
+            <div class="cell cell-total"><span class="cell-total-val">${fmt(s.qty * s.newPrice)}</span></div>
+            <div class="cell cell-actions">
+              <button type="button" class="row-action" aria-label="Remove ${s.storeName} from this order"
+                      ${disabled ? 'disabled' : ''}
+                      data-track="cta-store-row-delete"
+                      onclick="deleteStore('${p.id}', '${s.id}')">
+                <hexa-icon name="TrashIcon"></hexa-icon>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('') : '';
+
+      return parent + childrenHtml;
+    }).join('');
+
+    wrap.innerHTML = headerHtml + bodyHtml;
+  }
+
+  function toggleExpand(id) {
+    const p = state.rows.find(x => x.id === id);
+    if (!p) return;
+    p.expanded = !p.expanded;
+    renderDraftTable();
+  }
+
+  // ----- Per-store edits ---------------------------------------------
+  function markDirty() {
+    state.editsDirty = true;
+    if (state.paymentMethod !== null) renderSidebar();
+  }
+
+  function normalizeFlexRaw(raw) {
+    return String(raw ?? '')
+      .replace(/\u2212/g, '-')   // unicode minus → ASCII hyphen
+      .replace(/,/g, '.')
+      .trim();
+  }
+
+  // Accepts "-10", "-10%", "10", "10%". Signed number: negative = discount, positive = increase.
+  function parseFlexInput(raw) {
+    const cleaned = normalizeFlexRaw(raw).replace(/[%\s]/g, '');
+    if (cleaned === '' || cleaned === '-' || cleaned === '+') return NaN;
+    const n = Number(cleaned);
+    return Number.isFinite(n) ? n : NaN;
+  }
+
+  function parseFlexPct(raw) {
+    const parsed = parseFlexInput(raw);
+    if (Number.isNaN(parsed) || parsed === 0) return null;
+    const magnitude = Math.abs(parsed);
+    return {
+      signedPct: parsed,
+      magnitude,
+      isDiscount: parsed < 0,
+    };
+  }
+
+  /** Apply flex % to one store line. Updates table state and live summary. */
+  function applyFlexPctToStore(p, s, flex) {
+    const delta = +(p.currentPrice * flex.magnitude / 100).toFixed(2);
+    s.flexPct = flex.magnitude;
+    s.flexSigned = flex.signedPct;
+    s.flexValue = delta;
+    if (flex.isDiscount) {
+      s.newPrice = +(p.currentPrice - delta).toFixed(2);
+      s.flexInput = '-' + formatPct(flex.magnitude);
+      s.flexError = flex.magnitude < p.minPct || flex.magnitude > p.maxPct;
+    } else {
+      s.newPrice = +(p.currentPrice + delta).toFixed(2);
+      s.flexInput = formatPct(flex.magnitude);
+      s.flexError = false;
+    }
+    s.newPriceInput = s.newPrice.toFixed(2);
+    return true;
+  }
+
+  function afterProductStoresEdit(p, { rerenderChildren = false } = {}) {
+    recomputeProduct(p);
+    p.flexError = p.stores.some(s => s.flexError);
+    if (rerenderChildren || p.expanded) renderDraftTable();
+    else refreshProductRow(p);
+    markDirty();
+  }
+
+  function editProductQty(productId, raw) {
+    const p = state.rows.find(x => x.id === productId);
+    if (!p) return;
+    const n = Math.max(0, Math.floor(Number(raw) || 0));
+    p.stores.forEach(s => {
+      s.qty = n;
+      s.qtyInput = String(n);
+    });
+    afterProductStoresEdit(p);
+  }
+
+  function editProductFlex(productId, raw) {
+    const p = state.rows.find(x => x.id === productId);
+    if (!p) return;
+    const flex = parseFlexPct(raw);
+    if (!flex) return;
+    p.stores.forEach(s => applyFlexPctToStore(p, s, flex));
+    afterProductStoresEdit(p);
+  }
+
+  function editProductNewPrice(productId, raw) {
+    const p = state.rows.find(x => x.id === productId);
+    if (!p) return;
+    p.stores.forEach(s => {
+      s.newPriceInput = raw;
+      const n = Number(String(raw).replace(/[^0-9.\-]/g, ''));
+      if (!Number.isFinite(n)) return;
+      s.newPrice = +n.toFixed(2);
+      const lineDelta = +(s.newPrice - p.currentPrice).toFixed(2);
+      if (lineDelta <= 0) {
+        const disc = Math.abs(lineDelta);
+        s.flexValue = disc;
+        s.flexPct = +((disc / p.currentPrice) * 100).toFixed(2);
+        s.flexSigned = -s.flexPct;
+        s.flexInput = '-' + formatPct(s.flexPct);
+        s.flexError = s.flexPct < p.minPct || s.flexPct > p.maxPct;
+      } else {
+        s.flexValue = lineDelta;
+        s.flexPct = +((lineDelta / p.currentPrice) * 100).toFixed(2);
+        s.flexSigned = s.flexPct;
+        s.flexInput = formatPct(s.flexPct);
+        s.flexError = false;
+      }
+    });
+    afterProductStoresEdit(p);
+  }
+
+  function editStoreQty(productId, storeId, raw) {
+    const p = state.rows.find(x => x.id === productId);
+    const s = p?.stores.find(x => x.id === storeId);
+    if (!s) return;
+    s.qtyInput = raw;
+    const n = Math.max(0, Math.floor(Number(raw) || 0));
+    s.qty = n;
+    recomputeProduct(p);
+    refreshProductRow(p);
+    refreshStoreTotals(p, s);
+    markDirty();
+  }
+
+  function editStoreFlex(productId, storeId, raw) {
+    const p = state.rows.find(x => x.id === productId);
+    const s = p?.stores.find(x => x.id === storeId);
+    if (!s) return;
+    s.flexInput = raw;
+    const flex = parseFlexPct(raw);
+    if (!flex) return;
+    applyFlexPctToStore(p, s, flex);
+    recomputeProduct(p);
+    refreshProductRow(p);
+    refreshStoreTotals(p, s);
+    const np = document.querySelector(`.draft-row--store[data-store-id="${s.id}"] .store-newprice-input`);
+    if (np) np.value = s.newPriceInput;
+    markDirty();
+  }
+
+  function editStoreNewPrice(productId, storeId, raw) {
+    const p = state.rows.find(x => x.id === productId);
+    const s = p?.stores.find(x => x.id === storeId);
+    if (!s) return;
+    s.newPriceInput = raw;
+    const n = Number(String(raw).replace(/[^0-9.\-]/g, ''));
+    if (!Number.isFinite(n)) return;
+    s.newPrice = +n.toFixed(2);
+    const lineDelta = +(s.newPrice - p.currentPrice).toFixed(2);
+    if (lineDelta <= 0) {
+      const disc = Math.abs(lineDelta);
+      s.flexValue = disc;
+      s.flexPct = +((disc / p.currentPrice) * 100).toFixed(2);
+      s.flexSigned = -s.flexPct;
+      s.flexInput = '-' + formatPct(s.flexPct);
+      s.flexError = s.flexPct < p.minPct || s.flexPct > p.maxPct;
+    } else {
+      s.flexValue = lineDelta;
+      s.flexPct = +((lineDelta / p.currentPrice) * 100).toFixed(2);
+      s.flexSigned = s.flexPct;
+      s.flexInput = formatPct(s.flexPct);
+      s.flexError = false;
+    }
+    recomputeProduct(p);
+    refreshProductRow(p);
+    refreshStoreTotals(p, s);
+    const fi = document.querySelector(`.draft-row--store[data-store-id="${s.id}"] .store-flex-input`);
+    if (fi) fi.value = s.flexInput;
+    markDirty();
+  }
+
+  // Patch the parent product row in place — keeps focus while typing.
+  function refreshProductRow(p) {
+    const row = document.querySelector(`.draft-row--product[data-id="${p.id}"]`);
+    if (!row) return;
+    const flexLabel = fmtRangePct(p.flexRange.min, p.flexRange.max);
+    const newPriceLabel = fmtRangeMoney(p.newPriceRange.min, p.newPriceRange.max);
+    const flexUniform = uniformStoreValue(p, s => s.flexInput);
+    const newUniform = uniformStoreValue(p, s => s.newPriceInput);
+    const qtyUniform = uniformStoreValue(p, s => String(s.qty));
+    const pErrorClass = p.stores.some(s => s.flexError);
+
+    const qtyIn = row.querySelector('.product-qty-input');
+    if (qtyIn) {
+      qtyIn.value = qtyUniform.value;
+      qtyIn.placeholder = qtyUniform.uniform ? '' : String(p.qty);
+    }
+    const flexIn = row.querySelector('.product-flex-input');
+    if (flexIn) {
+      flexIn.value = flexUniform.value;
+      flexIn.placeholder = flexUniform.uniform ? '' : flexLabel;
+    }
+    const newIn = row.querySelector('.product-newprice-input');
+    if (newIn) {
+      newIn.value = newUniform.value;
+      newIn.placeholder = newUniform.uniform ? '' : newPriceLabel;
+    }
+    row.querySelector('.cell-flex .hexa-input-wrap')?.classList.toggle('is-error', pErrorClass);
+    row.querySelector('.cell-flex .cell-caption')?.classList.toggle('is-error', pErrorClass);
+    row.querySelector('.cell-total .cell-total-val').textContent = fmt(p.total);
+  }
+
+  function refreshProductSummary(p) {
+    refreshProductRow(p);
+  }
+
+  function refreshStoreTotals(p, s) {
+    const row = document.querySelector(`.draft-row--store[data-store-id="${s.id}"]`);
+    if (!row) return;
+    row.querySelector('.cell-total .cell-total-val').textContent = fmt(s.qty * s.newPrice);
+  }
+
+  function deleteRow(id) {
+    state.rows = state.rows.filter(x => x.id !== id);
+    renderDraftTable();
+    updateBulkBar();
+    markDirty();
+  }
+
+  // Remove one store line from a product. If it was the last store,
+  // drop the whole product row.
+  function deleteStore(productId, storeId) {
+    const p = state.rows.find(x => x.id === productId);
+    if (!p) return;
+    p.stores = p.stores.filter(s => s.id !== storeId);
+    if (p.stores.length === 0) {
+      state.rows = state.rows.filter(x => x.id !== productId);
+    } else {
+      recomputeProduct(p);
+    }
+    renderDraftTable();
+    updateBulkBar();
+    markDirty();
+  }
+
+  function countSelectedLines() {
+    let n = 0;
+    state.rows.forEach(p => {
+      if (p.outOfStock) return;
+      if (p.selected) {
+        n += 1;
+        return;
+      }
+      p.stores.forEach(s => { if (s.selected) n += 1; });
+    });
+    return n;
+  }
+
+  // Multi-select bulk actions
+  function toggleRowSelected(id, on) {
+    const r = state.rows.find(x => x.id === id);
+    if (!r) return;
+    r.selected = on;
+    r.stores.forEach(s => { s.selected = on; });
+    renderDraftTable();
+    updateBulkBar();
+  }
+
+  function toggleStoreSelected(productId, storeId, on) {
+    const p = state.rows.find(x => x.id === productId);
+    const s = p?.stores.find(x => x.id === storeId);
+    if (!s) return;
+    s.selected = on;
+    if (!on) p.selected = false;
+    else if (p.stores.every(st => st.selected)) p.selected = true;
+    renderDraftTable();
+    updateBulkBar();
+  }
+
+  function toggleAll(on) {
+    state.rows.forEach(r => {
+      if (r.outOfStock) return;
+      r.selected = on;
+      r.stores.forEach(s => { s.selected = on; });
+    });
+    renderDraftTable();
+    updateBulkBar();
+  }
+  function clearSelection() {
+    state.rows.forEach(r => {
+      r.selected = false;
+      r.stores.forEach(s => { s.selected = false; });
+    });
+    document.getElementById('checkAll')?.removeAttribute('checked');
+    renderDraftTable();
+    updateBulkBar();
+  }
+  function resetBulkFlexInput() {
+    const el = document.getElementById('bulkPct');
+    if (el) el.value = '';
+  }
+
+  function updateBulkBar() {
+    const locked = state.draftStatus === 'APPROVED' || state.draftStatus === 'PENDING';
+    const countN = countSelectedLines();
+    state.selectedCount = countN;
+    const bar = document.getElementById('bulkBar');
+    const count = document.getElementById('bulkBarCount');
+    const applyBtn = document.getElementById('bulkApplyBtn');
+    const deleteBtn = document.getElementById('bulkDeleteBtn');
+    if (bar) bar.classList.toggle('has-selection', countN > 0);
+    if (count) {
+      count.textContent = countN === 0 ? '0 selected' : `${countN} selected`;
+    }
+    const disableActions = locked || countN === 0;
+    if (applyBtn) applyBtn.disabled = disableActions;
+    if (deleteBtn) deleteBtn.disabled = disableActions;
+  }
+
+  function bulkApplyFlex() {
+    const raw = document.getElementById('bulkPct')?.value ?? '';
+    const flex = parseFlexPct(raw);
+    if (!flex) return;
+
+    const touched = new Set();
+    state.rows.forEach(p => {
+      if (p.outOfStock) return;
+      const productSelected = !!p.selected;
+      const selectedStores = p.stores.filter(s => s.selected);
+      if (!productSelected && !selectedStores.length) return;
+
+      const targets = productSelected ? p.stores : selectedStores;
+      targets.forEach(s => {
+        applyFlexPctToStore(p, s, flex);
+        touched.add(p.id);
+      });
+    });
+
+    if (!touched.size) return;
+
+    touched.forEach(id => {
+      const p = state.rows.find(x => x.id === id);
+      if (p) recomputeProduct(p);
+    });
+    state.bulkApplied = (state.bulkApplied || 0) + 1;
+    renderDraftTable();
+    markDirty();
+    HT.track('flex_bulk_applied', {
+      signed_pct: flex.signedPct,
+      is_discount: flex.isDiscount,
+      lines: touched.size,
+    });
+  }
+
+  function bulkDelete() {
+    const productIdsToRemove = new Set();
+    state.rows.forEach(p => {
+      if (p.outOfStock) return;
+      if (p.selected) {
+        productIdsToRemove.add(p.id);
+        return;
+      }
+      const remaining = p.stores.filter(s => !s.selected);
+      if (remaining.length < p.stores.length) {
+        if (remaining.length === 0) productIdsToRemove.add(p.id);
+        else {
+          p.stores = remaining;
+          p.selected = false;
+          recomputeProduct(p);
+        }
+      }
+    });
+    if (productIdsToRemove.size) {
+      state.rows = state.rows.filter(r => !productIdsToRemove.has(r.id));
+    }
+    renderDraftTable();
+    updateBulkBar();
+    markDirty();
+  }
+
+  // Sidebar (right column) — flex balance + per-seller totals + CTA
+  function renderSidebar() {
+    const ctx = D.DRAFT_CONTEXT;
+    const seller = ctx.perSeller[0] || { name: 'DPC', stores: 3 };
+    const sums = computeOrderSummary();
+    const {
+      originalPrice,
+      totalDiscountAmt,
+      totalIncreaseAmt,
+      finalPrice,
+      adjustments,
+      discountPct,
+      increasePct,
+      adjustmentPct,
+    } = sums;
+    const showFlexLines = state.paymentMethod !== null;
+
+    const sendBtn = state.draftStatus === 'APPROVED' ? `
+      <button class="hexa-btn hexa-btn--primary summary-cta" data-track="cta-draft-place-order" onclick="placeOrder()">
+        Place order
+      </button>
+    ` : state.draftStatus === 'PENDING' ? `
+      <button class="hexa-btn hexa-btn--primary summary-cta hexa-btn--loading" disabled>
+        Sending for approval
+      </button>
+    ` : `
+      <button class="hexa-btn hexa-btn--primary summary-cta"
+              data-track="cta-draft-send-approval"
+              onclick="sendForApproval()">
+        Send for approval
+      </button>
+    `;
+
+    const discountsBlock = showFlexLines && totalDiscountAmt > 0 ? `
+      <div class="summary-line">
+        <div class="summary-line-label">
+          <div class="summary-line-head">
+            <span>Discounts</span>
+            <span class="summary-tag summary-tag--green">- ${discountPct}%</span>
+          </div>
+          <div class="summary-line-sub">Debited from balance when the order is placed.</div>
+        </div>
+        <div class="summary-line-amt summary-amt--positive">${fmtNeg(totalDiscountAmt)}</div>
+      </div>
+    ` : '';
+
+    const increasesBlock = showFlexLines && totalIncreaseAmt > 0 ? `
+      <div class="summary-line">
+        <div class="summary-line-label">
+          <div class="summary-line-head">
+            <span>Price increases</span>
+            <span class="summary-tag summary-tag--orange">+ ${increasePct}%</span>
+          </div>
+          <div class="summary-line-sub">Credited to flex balance after delivery. Subject to approval.</div>
+        </div>
+        <div class="summary-line-amt summary-amt--attention">+ ${fmt(totalIncreaseAmt)}</div>
+      </div>
+    ` : '';
+
+    const adjustmentsBlock = showFlexLines && (totalDiscountAmt + totalIncreaseAmt) > 0 ? `
+      <div class="summary-divider"></div>
+      <div class="summary-line summary-line--compact">
+        <div class="summary-line-label">
+          <div class="summary-line-head">
+            <span>Price adjustments</span>
+            ${adjustments !== 0 ? `<span class="summary-tag ${adjustments > 0 ? 'summary-tag--green' : 'summary-tag--orange'}">${adjustments > 0 ? '-' : '+'} ${Math.abs(adjustmentPct)}%</span>` : ''}
+          </div>
+        </div>
+        <div class="summary-line-amt ${adjustments >= 0 ? 'summary-amt--positive' : 'summary-amt--attention'}">${adjustments >= 0 ? fmtNeg(adjustments) : '+ ' + fmt(Math.abs(adjustments))}</div>
+      </div>
+    ` : '';
+
+    document.getElementById('draftSidebar').innerHTML = `
+      <article class="summary-card">
+        <header class="summary-head">
+          <h3 class="summary-seller">${seller.name}</h3>
+          <span class="summary-badge">${seller.stores * 856 || 2567}</span>
+        </header>
+        <p class="summary-sub">Ordering for ${seller.stores} stores</p>
+        <hr class="summary-divider" />
+        <div class="summary-line summary-line--compact">
+          <div class="summary-line-label">
+            <span>Original price</span>
+          </div>
+          <div class="summary-line-amt summary-amt--secondary">${fmt(originalPrice)}</div>
+        </div>
+        ${discountsBlock}
+        ${increasesBlock}
+        ${adjustmentsBlock}
+        <div class="summary-final">
+          <span>Final price</span>
+          <strong>${fmt(showFlexLines ? finalPrice : originalPrice)}</strong>
+        </div>
+        ${sendBtn}
+      </article>
+
+      <article class="balance-card">
+        <h3 class="balance-title">Available flex balance</h3>
+        <div class="balance-value">${fmt(ctx.flexBalance)}</div>
+        <a href="#wallet" class="balance-link" data-track="cta-wallet-open" data-source="draft-sidebar">
+          Go to wallet
+        </a>
+        <hr class="summary-divider" />
+        <div class="summary-line summary-line--compact">
+          <div class="summary-line-label">
+            <span>Estimated balance after delivery</span>
+          </div>
+          <div class="summary-line-amt summary-amt--positive">${fmtNeg(ctx.estimatedAfterDelivery)}</div>
+        </div>
+      </article>
+    `;
+  }
+
+  function sendForApproval() {
+    HT.track('draft_send_for_approval', {
+      products: state.rows.length,
+      bulk_applied_count: state.bulkApplied,
+      validation_errors_at_submit: state.rows.filter(r => r.flexError).length,
+    });
+    state.draftStatus = 'PENDING';
+    renderDraftHead();
+    renderDraftTable();
+    renderSidebar();
+    // Simulate manager auto-approval after a short pause
+    setTimeout(() => {
+      state.draftStatus = 'APPROVED';
+      HT.track('draft_auto_approved', { approver: D.DRAFT_CONTEXT.approver.name });
+      renderDraftHead();
+      renderDraftTable();
+      renderSidebar();
+    }, 3000);
+  }
+
+  function placeOrder() {
+    state.rows.forEach(recomputeProduct);
+    HT.track('order_placed', {
+      products: state.rows.length,
+      total_flex_used: state.rows.reduce((s, r) => s + (r.flexValue * r.qty), 0),
+    });
+    document.getElementById('confirmationTitle').textContent =
+      `${D.DRAFT_CONTEXT.storesCount} of ${D.DRAFT_CONTEXT.storesCount} orders placed!`;
+    state.cartSource = draftHasFlexPricing() ? 'draft' : 'po';
+    location.hash = '#cart';
+  }
+
+  // ============================================================
+  // SCREEN 5 — Drafts hub
+  // ============================================================
+  function renderDraftsList() {
+    const hub = D.HUB_FLEX;
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    set('hubFlexAvailable',   fmt(hub.available));
+    set('hubFlexAfterDraft',  fmt(hub.afterDraftQuotes));
+    set('hubDiscountsTotal',  '-' + fmt(hub.discountsTotal));
+    set('hubDiscountsDraft',  '-' + fmt(hub.discountsDraft));
+    set('hubIncreasesTotal',  '+' + fmt(hub.increasesTotal));
+    set('hubIncreasesDraft',  '+' + fmt(hub.increasesDraft));
+
+    const wrap = document.getElementById('draftsRows');
+    wrap.innerHTML = D.DRAFTS_LIST.map((row, idx) => {
+      const stDef = D.STATUS_DEF[row.status] || { label: row.status, tone: 'neutral' };
+      const isDraftRow = row.status === 'DRAFT';
+      const rowOpenHandler = isDraftRow ? `openDraftFromRow(${idx})` : `viewDraftFromRow(${idx})`;
+      const finalP = row.finalPrice == null ? '—' : fmt(row.finalPrice);
+      const products = row.products ? `<span class="cell-num-sub">${row.products} products</span>` : '';
+      const isEven = idx % 2 !== 0;
+
+      // Price adjustments cell
+      let adjCell;
+      if (row.adjustmentType === 'discount' && row.totalDiscount != null) {
+        adjCell = `<span class="adj-value adj-value--discount">- ${fmt(row.totalDiscount)}</span>
+                   <span class="adj-label adj-label--discount">- ${row.discountPct}% discount</span>`;
+      } else if (row.adjustmentType === 'increase' && row.totalDiscount != null) {
+        adjCell = `<span class="adj-value adj-value--increase">+ ${fmt(row.totalDiscount)}</span>
+                   <span class="adj-label adj-label--increase">+ ${row.discountPct}% increase</span>`;
+      } else {
+        adjCell = `<span class="adj-value">—</span>`;
+      }
+
+      const primaryAction = isDraftRow
+        ? `<button class="drafts-action-item" data-track="cta-drafts-edit" onclick="openDraftFromRow(${idx})">
+             <hexa-icon name="EditIcon"></hexa-icon> Edit
+           </button>`
+        : `<button class="drafts-action-item" data-track="cta-drafts-view" onclick="viewDraftFromRow(${idx})">
+             <hexa-icon name="EyeOnIcon"></hexa-icon> View
+           </button>`;
+      const actionBtn = `
+           <button class="row-action row-action-menu-btn" aria-label="Row actions" data-track="cta-drafts-row-menu" onclick="openDraftsMenu(${idx}, event)">
+             <hexa-icon name="MoreHorizontalIcon"></hexa-icon>
+           </button>
+           <div class="drafts-action-menu" id="draftsMenu-${idx}" hidden>
+             ${primaryAction}
+             <button class="drafts-action-item" data-track="cta-drafts-download" onclick="downloadDraft(${idx})">
+               <hexa-icon name="DownloadIcon"></hexa-icon> Download
+             </button>
+             <button class="drafts-action-item is-destructive" data-track="cta-drafts-delete" onclick="deleteDraft(${idx})">
+               <hexa-icon name="TrashIcon"></hexa-icon> Delete
+             </button>
+           </div>`;
+
+      return `
+        <div class="drafts-row ${isEven ? 'is-zebra' : ''}" data-row-idx="${idx}" onclick="${rowOpenHandler}" role="button" tabindex="0">
+          <div class="cell">${row.chain}</div>
+          <div class="cell">${row.createdOn}</div>
+          <div class="cell">${row.stores}</div>
+          <div class="cell cell-adj">${adjCell}</div>
+          <div class="cell cell-price">${finalP}${products}</div>
+          <div class="cell"><span class="status-pill is-${stDef.tone}">${stDef.label}</span></div>
+          <div class="cell cell-action" onclick="event.stopPropagation()">
+            ${actionBtn}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  let openDraftsMenuIdx = null;
+  function openDraftsMenu(idx, ev) {
+    ev?.stopPropagation();
+    closeDraftsMenu();
+    const m = document.getElementById('draftsMenu-' + idx);
+    if (m) { m.hidden = false; openDraftsMenuIdx = idx; }
+  }
+  function closeDraftsMenu() {
+    if (openDraftsMenuIdx != null) {
+      document.getElementById('draftsMenu-' + openDraftsMenuIdx)?.setAttribute('hidden', '');
+      openDraftsMenuIdx = null;
+    }
+  }
+  function openDraftFromRow(idx) {
+    const row = D.DRAFTS_LIST[idx];
+    closeDraftsMenu();
+    if (row.status === 'APPROVED') state.draftStatus = 'APPROVED';
+    else state.draftStatus = 'DRAFT';
+    state.draftEntrySource = 'existing';
+    state.rows = buildDraftRows({ prefillPricing: true });
+    state.paymentMethod = state.paymentMethod || (D.PAYMENT_METHODS[0]?.id ?? 'pix');
+    state.editsDirty = false;
+    resetBulkFlexInput();
+    HT.track('drafts_row_opened', { number: row.number, status: row.status, mode: 'edit' });
+    location.hash = '#order-draft';
+  }
+  function viewDraftFromRow(idx) {
+    const row = D.DRAFTS_LIST[idx];
+    closeDraftsMenu();
+    if (row.status === 'AWAITING_APPROVAL' || row.status === 'PENDING') state.draftStatus = 'PENDING';
+    else state.draftStatus = 'APPROVED';
+    state.draftEntrySource = 'existing';
+    state.rows = buildDraftRows({ prefillPricing: true });
+    state.paymentMethod = state.paymentMethod || (D.PAYMENT_METHODS[0]?.id ?? 'pix');
+    state.editsDirty = false;
+    resetBulkFlexInput();
+    HT.track('drafts_row_opened', { number: row.number, status: row.status, mode: 'view' });
+    location.hash = '#order-draft';
+  }
+  function downloadDraft(idx) {
+    closeDraftsMenu();
+    HT.track('drafts_row_download_clicked', { number: D.DRAFTS_LIST[idx].number });
+    // Stubbed — no real download.
+  }
+  function deleteDraft(idx) {
+    closeDraftsMenu();
+    HT.track('drafts_row_delete_clicked', { number: D.DRAFTS_LIST[idx].number });
+  }
+  function createNewDraftFromHub() {
+    HT.track('drafts_create_new_clicked');
+    location.hash = '#po-upload';
+  }
+
+  // ============================================================
+  // SCREEN — Flex wallet (now lives in the drafts tab)
+  // ============================================================
+  state.walletFilter = 'all';
+
+  function switchDraftsTab(tab) {
+    document.querySelectorAll('.drafts-tab-btn').forEach(btn => {
+      btn.classList.toggle('is-active', btn.dataset.tab === tab);
+    });
+    const ordersPanel = document.getElementById('draftsTabOrders');
+    const walletPanel = document.getElementById('draftsTabWallet');
+    if (ordersPanel) ordersPanel.hidden = (tab !== 'orders');
+    if (walletPanel) walletPanel.hidden = (tab !== 'wallet');
+    if (tab === 'wallet') renderWalletRows();
+    HT.track('drafts_tab_switched', { tab });
+  }
+
+  function goToDraftsTab(tab, ev) {
+    ev?.preventDefault();
+    state.draftsTab = tab;
+    location.hash = '#drafts';
+  }
+
+  function setWalletFilter(filter, ev) {
+    state.walletFilter = filter;
+    document.querySelectorAll('.wallet-chip').forEach(c => {
+      c.classList.toggle('is-active', c.dataset.filter === filter);
+    });
+    HT.track('wallet_filter_changed', { filter });
+    renderWalletRows();
+  }
+
+  function renderWallet() {
+    const w = D.WALLET;
+    const setEl = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    setEl('walletAvailable', fmt(w.available));
+    setEl('walletCommitted', fmt(w.totals.committed || 0));
+    setEl('walletActive',    fmt(w.totals.committed || 0));
+    setEl('walletConsumed',  fmt(0));
+    setEl('walletReleased',  '+' + fmt(w.totals.released || 0));
+    renderWalletRows();
+  }
+
+  function renderWalletRows() {
+    const filter = state.walletFilter;
+    const rows = D.WALLET.entries.filter(e =>
+      filter === 'all' ? true : e.ledgerStatus === filter
+    );
+    const host = document.getElementById('walletRowsInTab') || document.getElementById('walletRows');
+    if (!host) return;
+    host.innerHTML = rows.map((e, idx) => {
+      const def = D.WALLET_LEDGER_DEF[e.ledgerStatus];
+      const isIn = e.direction === 'in';
+      const sign = isIn ? '+' : '−';
+      const amountTone = isIn ? 'wallet-amount--credit' : '';
+      const isCommitted = e.ledgerStatus === 'committed';
+      const muted = isCommitted ? ' text-fg-neutral-secondary' : '';
+      const isEven = idx % 2 !== 0;
+      return `
+        <div class="drafts-row drafts-row--wallet ${isCommitted ? 'is-wallet-committed' : ''} ${isEven ? 'is-zebra' : ''}" data-track="cta-wallet-row-open" data-id="${e.id}" onclick="openDraftFromWallet(${e.draftIdx})" role="button" tabindex="0">
+          <div class="cell${muted}">${e.orderName}</div>
+          <div class="cell${muted}">${e.orderDate}</div>
+          <div class="cell cell-price${muted}"><span class="wallet-amount${muted} ${amountTone}">${sign}${fmt(e.amount)}</span></div>
+          <div class="cell">
+            <span class="overview-tooltip-wrap overview-tooltip-wrap--wide" data-tooltip="${def.tooltip}">
+              <span class="status-pill is-${def.tone}">${def.label}</span>
+            </span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function openDraftFromWallet(idx) {
+    const row = D.DRAFTS_LIST[idx];
+    if (!row) return;
+    HT.track('wallet_row_opened', { draft_number: row.number, status: row.status });
+    if (row.status === 'APPROVED') state.draftStatus = 'APPROVED';
+    else if (row.status === 'PENDING' || row.status === 'AWAITING_APPROVAL') state.draftStatus = 'PENDING';
+    else state.draftStatus = 'DRAFT';
+    state.draftEntrySource = 'existing';
+    state.rows = buildDraftRows({ prefillPricing: true });
+    state.paymentMethod = state.paymentMethod || (D.PAYMENT_METHODS[0]?.id ?? 'pix');
+    state.editsDirty = false;
+    resetBulkFlexInput();
+    location.hash = '#order-draft';
+  }
+
+  // ============================================================
+  // HOME — keep the flex-balance card in sync with HUB_FLEX
+  // so the home and the wallet/drafts hub agree on the numbers.
+  // ============================================================
+  function renderHome() {
+    const hub = (data && data.HUB_FLEX) || {};
+    const wallet = (data && data.WALLET) || {};
+    const available = hub.available != null ? hub.available : (wallet.available || 0);
+    const forDrafts = hub.forDrafts != null ? hub.forDrafts : ((wallet.totals && wallet.totals.committed) || 0);
+
+    const a = document.getElementById('homeFlexAvailable');
+    const d = document.getElementById('homeFlexForDrafts');
+    if (a) a.textContent = fmt(available);
+    if (d) d.textContent = '- ' + fmt(forDrafts);
+  }
+
+  // ============================================================
+  // SCREEN ROUTING
+  // ============================================================
+  function showScreen() {
+    const hash = location.hash || '#home';
+    document.querySelectorAll('[data-screen]').forEach(s => {
+      s.hidden = ('#' + s.id) !== hash;
+    });
+    window.scrollTo(0, 0);
+
+    // Lazy render on screen entry so heavy lists are only computed when shown
+    if (hash === '#home') renderHome();
+    if (hash === '#cart') renderCart();
+    if (hash === '#order-draft') {
+      renderDraftHead();
+      // Toggle between payment-method picker (first time) and the
+      // products view (after the rep commits a method).
+      if (state.paymentMethod === null) {
+        renderPaymentStep();
+      } else {
+        showDraftProducts();
+        resetBulkFlexInput();
+        renderDraftTable();
+        renderSidebar();
+        updateBulkBar();
+      }
+    }
+    if (hash === '#drafts') {
+      renderDraftsList();
+      const tab = state.draftsTab || 'orders';
+      state.draftsTab = 'orders';
+      switchDraftsTab(tab);
+    }
+    if (hash === '#wallet') {
+      state.draftsTab = 'wallet';
+      location.hash = '#drafts';
+      return;
+    }
+  }
+  addEventListener('hashchange', showScreen);
+  showScreen();
+
+  document.getElementById('bulkApplyBtn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    bulkApplyFlex();
+  });
+  </script>
+</body>
+</html>
