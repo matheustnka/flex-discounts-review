@@ -104,6 +104,7 @@
   .b.dur{background:var(--g900);color:var(--bees);font-family:var(--mono)}
   .b.req{background:var(--err-bg);color:var(--err);border:1px solid var(--err-bd)}
   .b.nice{background:var(--info-bg);color:var(--info);border:1px solid var(--info-bd)}
+  .b.next{background:#312E81;color:#C7D2FE;border:1px solid #4338CA}
   .b.fe{background:var(--info-bg);color:var(--info);border:1px solid var(--info-bd)}
   .b.be{background:#F5F3FF;color:#7C3AED;border:1px solid #DDD6FE}
   .b.tbd{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn-bd)}
@@ -256,7 +257,7 @@
         <div class="ahead"><span class="anum">SCREEN</span><h4>Home</h4></div>
         <p class="scap">Entry point + flex balance teaser.</p>
         <div class="pi"><span class="pn">1</span><span class="pt"><b>Homepage</b><span>Banner is <b>nice-to-have</b>; the <b>Pedido</b> menu entry point is the requirement.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
-        <div class="pi"><span class="pn">9</span><span class="pt"><b>Flex Wallet</b><span>Available flex balance card → "Ir para carteira flex".</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
+        <div class="pi"><span class="pn">9</span><span class="pt"><b>Flex Wallet <span style="color:#4338CA">(next phase)</span></b><span>Available flex balance card → "Ir para carteira flex". Nice-to-have / next phase.</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
       </div>
     </div>
 
@@ -272,7 +273,7 @@
         <div class="ahead"><span class="anum">SCREEN</span><h4>Cart (caminhão)</h4></div>
         <p class="scap">The "Resumo do pedido" panel carries three pieces.</p>
         <div class="pi"><span class="pn">3</span><span class="pt"><b>Group Quotation Creation</b><span>Quotation is born in the cart, not the spreadsheet.</span><span class="trk"><span class="dot" style="background:var(--t-cot)"></span>Group quotation</span></span></div>
-        <div class="pi"><span class="pn">9</span><span class="pt"><b>Flex Wallet</b><span>Wallet balance shown right inside the cart.</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
+        <div class="pi"><span class="pn">9</span><span class="pt"><b>Flex Wallet <span style="color:#4338CA">(next phase)</span></b><span>Wallet balance inside the cart — nice-to-have / next phase.</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
         <div class="pi"><span class="pn">2</span><span class="pt"><b>Changes to the Cart</b><span>"Salvar como rascunho" — save as draft button.</span><span class="trk"><span class="dot" style="background:var(--t-fe)"></span>Frontend / UX</span></span></div>
       </div>
     </div>
@@ -337,7 +338,7 @@
       <div class="pinlist">
         <div class="ahead"><span class="anum">SCREEN</span><h4>Flex wallet</h4></div>
         <p class="scap">Ledger tab on the drafts hub.</p>
-        <div class="pi"><span class="pn">9</span><span class="pt"><b>Development of Flex Wallet</b><span>Balance is core; the <b>transaction history</b> ledger (Comprometido / Liberado) is <b>nice-to-have</b>.</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
+        <div class="pi"><span class="pn">9</span><span class="pt"><b>Development of Flex Wallet <span style="color:#4338CA">(next phase)</span></b><span>The whole wallet — <b>balance + transaction history</b> (Comprometido / Liberado) — is <b>nice-to-have / next phase</b>.</span><span class="trk"><span class="dot" style="background:var(--t-wallet)"></span>Flex Wallet</span></span></div>
       </div>
     </div>
 
@@ -367,8 +368,8 @@
         </div>
         <div class="card" style="--track:var(--t-fe)">
           <div class="top"><div class="num">2</div><div><h4>Changes to the Cart</h4>
-            <div class="badges"><span class="b track fe">Frontend</span><span class="b dur">2d</span></div></div></div>
-          <p class="what">Add button + Flex Wallet balance display in the cart. The base for almost everything that follows.</p>
+            <div class="badges"><span class="b track fe">Frontend</span><span class="b dur">2d</span><span class="b next">balance = next phase</span></div></div></div>
+          <p class="what"><b>Add button</b> is core. The <b>wallet balance display</b> in the cart is <b>nice-to-have / next phase</b>. The add button is the base for almost everything that follows.</p>
           <div class="deltas">
             <div class="delta now"><span class="k">Today</span><span class="v">Cart is unaware of flex or balance.</span></div>
             <div class="delta fut"><span class="k">Prototype</span><span class="v">Add button + wallet balance inside the cart itself.</span></div>
@@ -478,7 +479,7 @@
         </div>
         <div class="card" style="--track:var(--t-wallet)">
           <div class="top"><div class="num">9</div><div><h4>Development of Flex Wallet</h4>
-            <div class="badges"><span class="b track" style="background:var(--t-wallet)">Wallet</span><span class="b dur">8d</span><span class="b fe">frontend</span><span class="b be">backend</span><span class="b nice">history = nice-to-have</span></div></div></div>
+            <div class="badges"><span class="b track" style="background:var(--t-wallet)">Wallet</span><span class="b dur">8d</span><span class="b fe">frontend</span><span class="b be">backend</span><span class="b next">balance + history = next phase</span></div></div></div>
           <p class="what">Backend and frontend implementation of the flex wallet — balance, ledger (committed/released), cart integration. <b>The largest single piece.</b></p>
           <div class="deltas">
             <div class="delta now"><span class="k">Today</span><span class="v">No flex wallet in the flow.</span></div>
@@ -535,7 +536,7 @@
       </div>
     </div>
 
-    <div class="note">⚠️ <div><b>Reading notes.</b> The wave sequence reflects the dependencies stated in the brief (cart before name reuse; endpoint before summary cards) — it is not a dated schedule and does not assume squad parallelism. Durations are the ones from the brief; the <b>~47-day</b> sum is raw effort (piece 8 = TBD, excluded from the total). "NFA" is kept verbatim from the brief — confirm what the acronym means before locking scope.</div></div>
+    <div class="note">⚠️ <div><b>Reading notes.</b> The wave sequence reflects the dependencies stated in the brief (cart before name reuse; endpoint before summary cards) — it is not a dated schedule and does not assume squad parallelism. Durations are the ones from the brief; the <b>~47-day</b> sum is raw effort (piece 8 = TBD, excluded from the total).<br><br><b>MVP core vs next phase.</b> Out of the MVP (<span style="display:inline-block;background:#312E81;color:#C7D2FE;border:1px solid #4338CA;border-radius:99px;padding:1px 8px;font-size:11px;font-weight:700">next phase</span> / nice-to-have): the full <b>Flex Wallet — #9, 8d</b> (balance + history) and the <b>wallet-balance display in the cart</b> (part of #2); plus nice-to-haves <b>home banner</b> (part of #1) and <b>reuse of quotation name #4 (2d)</b>. Dropping the Flex Wallet alone takes the MVP to <b>≈ 39 days</b> (+ #8 TBD). "NFA" is kept verbatim from the brief — confirm what the acronym means before locking scope. <b>#12</b> is genuinely new backend (<b>must validate</b> feasibility).</div></div>
   </div>
 </section>
 
